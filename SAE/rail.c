@@ -51,10 +51,11 @@ void ajouter_mot(Partie* jeu) {
     if (strcmp(cote, 'R') == 0) {
         char mot[MAX_RAIL]="";
         scanf("(%c)", mot);
+        printf("%c", mot);
         //ici utiliser strncpy / strcst selon la mm logique que initRail
     }
 
-    if (strcmp(cote, 'R') == 0) {
+    if (strcmp(cote, 'V') == 0) {
 
     }
 

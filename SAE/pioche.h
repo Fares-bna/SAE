@@ -8,6 +8,9 @@ typedef enum {
 } Constantes;
 
 
+void melangerPioche(char* pioche);
+
+
 /* enum {
     A = 9, E = 14, I = 7, N = 6, R = 6, V = 2,
     B = 1, F = 1, J = 1, O = 5, S = 7,

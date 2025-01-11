@@ -1,9 +1,9 @@
 #pragma once
 #include "joueur.h"
 #include "rail.h"
-#include "pioche.h"
 #include <stdio.h>
 #include <stdlib.h>
+
 
 
 typedef struct {

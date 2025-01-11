@@ -13,6 +13,24 @@
 
 
 
+void modifier_Main(const char* mot, char* main) {
+
+    for (int i = 0; i < strlen(mot); i++) {
+        for (int j = 0; j < strlen(main); j++)
+        {
+            if (mot[i] == main[j]) { //Si la lettre du mot correspond à une lettre du chevalet, on incrémente la valeur témoin et on continue la boucle
+                main[j] = '0';
+                break;
+            }
+
+        }
+
+
+    }
+
+}
+
+
 
 
 
@@ -27,9 +45,6 @@ bool verifier_mot(Joueur* joueur_act) {
         for (int j = 0; j < TAILLE_MAIN; ++j) { //Pour chaque lettre, on regarde l'entièreté de la main du joueur..
 
             if (joueur_act->mot_initial[i] == joueur_act->main_joueur[j]) { //Si la lettre du mot correspond à une lettre du chevalet, on incrémente la valeur témoin et on continue la boucle
-                joueur_act->main_joueur[j] = '0';
-
-
                 ++temoin;
                 break;
             }
@@ -41,6 +56,7 @@ bool verifier_mot(Joueur* joueur_act) {
 
     if (temoin == (TAILLE_MAXMOTS - 1)) {
 
+        modifier_Main(joueur_act->mot_initial, &joueur_act->main_joueur);
         return true;
     }
 
@@ -49,14 +65,15 @@ bool verifier_mot(Joueur* joueur_act) {
 
 
 void demanderMot(Joueur* joueur_act) {
-    
+    char mot[TAILLE_MAXMOTS];
 
     do {
         printf("%d> ", joueur_act->NoJoueur);
-        scanf("%s", joueur_act->mot_initial);
+        scanf("%s", joueur_act->mot_initial );
+      
 
 
-        //Plante si le mot dépasse les 4 lettres
+        
     } while (!verifDico(joueur_act->mot_initial));
 
 }
@@ -101,46 +118,6 @@ void ranger_main(Joueur* joueur_act, int taille_main) {
 
     affiche_main(joueur_act, TAILLE_MAIN - (TAILLE_MAXMOTS - 1));
 }
-
-
-
-
-/* void modifierMain(char* delete, Joueur* joueur_act, int taille_main) {
-    //reserve à deplacer et a continuer
-    char* reserve[TAILLE_PIOCHE];
-    int taille_reserve = 0;
-
-    for (int i = 0; i < strlen(delete); ++i) { //On parcours l'entiereté du mot entré, jusqu'arriver au caractère nul
-
-        for (int j = 0; j < taille_main; ++j) { //Pour chaque lettre, on regarde l'entièreté de la main du joueur..
-
-            if (delete[i] == joueur_act->main_joueur[j]) { //Si la lettre du mot correspond à une lettre du chevalet, on supprime la lettre du tableau
-                joueur_act->main_joueur[taille_reserve] = joueur_act->main_joueur[j];
-                ++taille_reserve;
-                joueur_act->main_joueur[j] = "\0";
-                break;
-            }
-        }
-
-
-    }
-
-        for (int i = 0; i < taille_main; ++i) {
-
-              int temoin=0;
-                if (joueur_act->main_joueur[i] = "0") {
-                    ++temoin;
-                }
-                taille_main -= temoin;
-
-
-
-
-        }
-
-}
-
-*/
 
 
 

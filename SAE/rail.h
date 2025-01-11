@@ -7,8 +7,8 @@
 #include <stdlib.h>
 
 typedef struct {
-	char recto[MAX_RAIL];
-	char verso[MAX_RAIL];
+	char recto[MAX_RAIL+1];
+	char verso[MAX_RAIL+1];
 } Rails;
 
 

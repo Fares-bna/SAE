@@ -51,6 +51,7 @@ void initialiserPartie(Partie* jeu) {
     ranger_main(&jeu->joueur2, TAILLE_MAIN);
 
     initRail(jeu->joueur1, jeu->joueur2, jeu->rail);
+    ajouter_mot(jeu);
 }
 
 
