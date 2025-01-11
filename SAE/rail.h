@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #define MAX_RAIL 8
+#define QTE_PARENTHESES 2
 #include <stdbool.h>
 #include <string.h>
 #include <stdio.h>

@@ -6,7 +6,7 @@
 #include "rail.h"
 
 //a enlever 
-#define MAX_
+
 
 void inverserRail(Rails* rail_jeu) {
 
@@ -55,40 +55,179 @@ void simplifier(char* mot) {
     mot[j] = '\0'; // Ajouter le caractère nul à la fin
 }
 
+
+bool separer_mots(const char* mot_entier, char* mot_rail, char* mot_main) {
+    // Chercher l'indice de la première parenthèse ouvrante et fermante
+    char* debut = strchr(mot_entier, '(');
+    char* fin = strchr(mot_entier, ')');
+
+    // Vérifier que les parenthèses existent et que leur ordre est correct
+    if (debut == NULL || fin == NULL || debut >= fin) {
+        return false;  // Pas de parenthèses ou ordre invalide
+    }
+
+    // Si la parenthèse est avant le mot principal
+    if (debut == mot_entier) {
+        // Copier le mot entre les parenthèses dans mot_rail
+        strncpy(mot_rail, debut + 1, fin - debut - 1);
+        mot_rail[fin - debut - 1] = '\0';  // Assurez-vous que mot_rail est bien terminé
+
+        // Copier le mot après la parenthèse dans mot_main
+        strcpy(mot_main, fin + 1);
+    }
+    // Si la parenthèse est après le mot principal
+    else {
+        // Copier le mot avant la parenthèse dans mot_main
+        strncpy(mot_main, mot_entier, debut - mot_entier);
+        mot_main[debut - mot_entier] = '\0';  // Assurez-vous que mot_main est bien terminé
+
+        // Copier le mot entre les parenthèses dans mot_rail
+        strncpy(mot_rail, debut + 1, fin - debut - 1);
+        mot_rail[fin - debut - 1] = '\0';  // Assurez-vous que mot_rail est bien terminé
+    }
+
+    return true;  // Séparation réussie
+}
+
+char cote_rail(const char* mot) {
+
+    if (mot[0] == '(') {
+        return 'D';
+    }
+    return 'G';
+}
+
+bool verifier_main(const char* mot_main, Joueur* joueur_act) {
+    int temoin = 0;
+    if (strlen(mot_main) >= TAILLE_MAXMOTS) {
+        return false;
+    }
+
+    for (int i = 0; i < strlen(mot_main); ++i) { //On parcours l'entiereté du mot entré, jusqu'arriver au caractère nul
+
+        for (int j = 0; j < TAILLE_MAIN; ++j) { //Pour chaque lettre, on regarde l'entièreté de la main du joueur..
+
+            if (mot_main[i] == joueur_act->main_joueur[j]) { //Si la lettre du mot correspond à une lettre du chevalet, on incrémente la valeur témoin et on continue la boucle
+                ++temoin;
+                break;
+            }
+        }
+
+    }
+
+
+
+
+    if (temoin == (TAILLE_MAXMOTS - 1)) {
+
+        modifier_Main(joueur_act->mot_initial, &joueur_act->main_joueur);
+        return true;
+    }
+
+    return false;
+}
+
+
+
 //Pour le recto
-bool verifier_introduction(Rails* rail, const char* mot, const char cote) {
-    
+bool verifier_introduction(Rails* rail_act, const char* mot, char* mot_rail, char* mot_main, const char cote) {
+
     if (strlen(mot) < 2 && strlen(mot) > 4) {
         return false;
     }
 
+
+
     if (cote == 'R') {
-        int temoin = 0;
-        printf("%d", strlen(mot));
-        for (int i = 0; i < strlen(mot); ++i) {
-            if (mot[i] == rail->recto[i]) {
-                ++temoin;
+
+
+
+
+        if (cote_rail(mot) == 'G') {
+
+            if (!separer_mots(mot, mot_rail, mot_main)) {
+                return false;
             }
+
+
+            int temoin = 0;
+
+            for (int i = 0; i < strlen(mot_rail); ++i) {
+                if (mot_rail[i] == rail_act->recto[i]) {
+                    ++temoin;
+                }
+            }
+            return temoin == strlen(mot_rail);
+
         }
-        return temoin == strlen(mot);
+    
+
+        if (cote_rail(mot) == 'D') {
+
+            if (!separer_mots(mot, mot_rail, mot_main)) {
+                return false;
+            }
+
+            int temoin = 0;
+            int index = 0;
+
+            for (int i = strlen(rail_act->recto) - 1; i > (strlen(rail_act->recto) - strlen(mot_rail)) - 1; --i) {
+                if (mot_rail[strlen(mot_rail) - 1 - index] == rail_act->recto[i]) {
+                    ++temoin;
+                }  ++index;
+            }
+
+            return temoin == strlen(mot_rail);
+
+        }
 
     }
-
     if (cote == 'V') {
-        int temoin = 0;
-        int index = 0;
-        
-        for (int i = strlen(rail->verso) - 1; i > (strlen(rail->verso) - strlen(mot)) - 1; --i) {
-            if (mot[strlen(mot) - 1 - index] == rail->verso[i]) {
-                ++temoin; 
-            }  ++index;
+
+
+
+
+        if (cote_rail(mot) == 'G') {
+
+            if (!separer_mots(mot, mot_rail, mot_main)) {
+                return false;
+            }
+
+
+            int temoin = 0;
+
+            for (int i = 0; i < strlen(mot_rail); ++i) {
+                if (mot_rail[i] == rail_act->verso[i]) {
+                    ++temoin;
+                }
+            }
+            return temoin == strlen(mot_rail);
+
         }
 
-        return temoin == strlen(mot);
+
+        if (cote_rail(mot) == 'D') {
+
+            if (!separer_mots(mot, mot_rail, mot_main)) {
+                return false;
+            }
+
+            int temoin = 0;
+            int index = 0;
+
+            for (int i = strlen(rail_act->verso) - 1; i > (strlen(rail_act->verso) - strlen(mot_rail)) - 1; --i) {
+                if (mot_rail[strlen(mot_rail) - 1 - index] == rail_act->verso[i]) {
+                    ++temoin;
+                }  ++index;
+            }
+
+            return temoin == strlen(mot_rail);
+
+        }
 
     }
-
-
+    
+    
     return false;
 
 
@@ -96,9 +235,13 @@ bool verifier_introduction(Rails* rail, const char* mot, const char cote) {
 
 
 
+
+
 void ajouter_mot(Partie* jeu, Joueur* joueur_act) {
     char cote = '\0';
-    char mot_rail[MAX_RAIL] = "";
+    char mot_entier[MAX_RAIL+QTE_PARENTHESES] = ""; 
+    char mot_rail[TAILLE_MAXMOTS-1];
+    char mot_main[TAILLE_MAXMOTS-1];
     do {
 
 
@@ -106,12 +249,16 @@ void ajouter_mot(Partie* jeu, Joueur* joueur_act) {
         do {
             printf("%d> ", joueur_act->NoJoueur);
             scanf(" %c", &cote);
+            scanf(" %s", mot_entier);
+
         } while (cote != 'R' && cote != 'V');
 
-        scanf(" (%s)", mot_rail);
-        simplifier(mot_rail);
+       
+        
 
-    } while (verifier_introduction(&jeu->rail, mot_rail, cote));
+    } while (!verifier_introduction(&jeu->rail, mot_entier, &mot_rail, &mot_main, cote));
+
+    
 }
 
   
