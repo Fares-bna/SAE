@@ -1,20 +1,18 @@
 #pragma once
+#include "joueur.h"
+
 #define NB_LETTRES 22
 
 // Définition des constantes avec enum
 typedef enum {
-    TAILLE_PIOCHE = 88,  // Nombre total de chevalets
-    TAILLE_MAIN = 12     // Nombre de chevalets par joueur
+    TAILLE_PIOCHE = 88,  // Nombre total de lettres dans la pioche
+    TAILLE_MAIN = 12     // Nombre de lettres dans la main d'un joueur
 } Constantes;
 
-
 void melangerPioche(char* pioche);
+void initialiser_Pioche(char* pioche);
+void tirer_main(char* pioche, Joueur* joueur_act, int* taille_pioche);
+void affiche_main(Joueur* joueur_act, int taille_main);
+void trier_et_afficher_main(Joueur* joueur_act);
 
-
-/* enum {
-    A = 9, E = 14, I = 7, N = 6, R = 6, V = 2,
-    B = 1, F = 1, J = 1, O = 5, S = 7,
-    C = 2, G = 1, L = 5, P = 2, T = 6,
-    D = 3, H = 1, M = 3, Q = 1, U = 5
-}; */
 

@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
-#include <string.h>
-#include <malloc.h>
-#include "joueur.h"
-#include "pioche.h"
-#include "partie.h"
+#include <time.h>     // Nécessaire pour `srand` et `rand`
+#include <string.h>   // Nécessaire pour les manipulations de chaînes
+#include "pioche.h"   // Pour les constantes et fonctions liées à la pioche
+#include "joueur.h"   // Pour manipuler la structure Joueur si nécessaire
+
+
+
 
 void melangerPioche(char* pioche) {
     for (int i = TAILLE_PIOCHE - 1; i > 0; i--) { // Parcourir de taille_pioche - 1 à 1

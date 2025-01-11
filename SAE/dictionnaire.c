@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
+#include "dictionnaire.h"
 
 bool verifDico(const char* mot) {
     FILE* dico = fopen("ods4.txt", "r");

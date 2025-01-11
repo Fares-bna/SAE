@@ -1,25 +1,22 @@
 ﻿#pragma once
+
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include "joueur.h"
-#include "pioche.h"
 
-enum { TAILLE_MAXMOTS = 5 };
+#define TAILLE_MAXMOTS 5
+#define TAILLE_MAIN 12
 
 typedef struct {
-	int NoJoueur;
-	char main_joueur[TAILLE_MAIN];
-	char mot_initial[TAILLE_MAXMOTS];
-}Joueur;
+    int NoJoueur;
+    char main_joueur[TAILLE_MAIN];
+    char mot_initial[TAILLE_MAXMOTS];
+} Joueur;
 
-
-
-
-
-
-
-
-
+void modifier_Main(const char* mot, char* main);
+bool verifier_mot(Joueur* joueur_act);
+void demanderMot(Joueur* joueur_act);
+void creation_joueur(char* pioche, Joueur* joueur_act, int* nbJoueur, int* taille_pioche);
+void ranger_main(Joueur* joueur_act, int taille_main);
 
 

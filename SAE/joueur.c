@@ -1,14 +1,9 @@
-
-// joueur.c
-
-#pragma warning (disable : 4996)
-#include "pioche.h"
-#include <stdio.h>
-#include <assert.h>
-#include <string.h>
-#include "dictionnaire.h"
-#include "partie.h"
-#include "joueur.h"
+#pragma warning(disable:4996)
+#include <stdio.h>     // Pour les entrées/sorties standard
+#include <stdbool.h>   // Pour le type bool
+#include <string.h>    // Pour les manipulations de chaînes
+#include "joueur.h"    // Nécessaire pour la structure Joueur et les fonctions associées
+#include "pioche.h"    // Pour interagir avec la pioche si nécessaire
 
 
 

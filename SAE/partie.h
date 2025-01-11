@@ -1,19 +1,16 @@
 #pragma once
+
+
 #include "joueur.h"
 #include "rail.h"
-#include <stdio.h>
-#include <stdlib.h>
-
-
+#include "pioche.h"
 
 typedef struct {
     char* pioche;
     Joueur joueur1;
     Joueur joueur2;
     Rails rail;
-}Partie;
+} Partie;
 
-
-
-
+void initialiserPartie(Partie* jeu);
 

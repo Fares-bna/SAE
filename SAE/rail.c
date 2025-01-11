@@ -1,11 +1,8 @@
 ﻿#pragma warning(disable:4996)
-#include "partie.h"
-#include "joueur.h"
-#include "pioche.h"
-#include "dictionnaire.h"
-#include "rail.h"
+#include <stdio.h>
+#include <string.h>
+#include "rail.h" // Nécessaire pour la structure Rails et les fonctions associées
 
-//a enlever 
 
 
 void inverserRail(Rails* rail_jeu) {

@@ -1,19 +1,10 @@
-﻿// partie.c
-#pragma warning(disable : 4996)
+﻿#pragma warning(disable : 4996)
 #include <stdio.h>
-#include <string.h>
-#include "partie.h"
-#include "joueur.h"
-#include "pioche.h"
-#include "dictionnaire.h"
-#include "rail.h"
-
-
-
-
-
-
-//V�rifie que le mot appartient � la main du joueur
+#include <stdlib.h>
+#include "partie.h"  // Pour la structure Partie et la fonction initialiserPartie
+#include "rail.h"    // Pour gérer les rails dans la partie
+#include "pioche.h"  // Pour initialiser la pioche dans la partie
+#include "joueur.h"  // Pour initialiser les joueurs
 
 
 
