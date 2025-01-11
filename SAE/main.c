@@ -10,7 +10,7 @@
     int main() {
 
     // D�marrer la partie
-    Partie octoverso[TAILLE_PIOCHE];
+    Partie octoverso;
 
     initialiserPartie(&octoverso);
 

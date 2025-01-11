@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+
 #define TAILLE_MAXMOTS 5
 #define TAILLE_MAIN 12
 
@@ -12,6 +13,7 @@ typedef struct {
     char main_joueur[TAILLE_MAIN];
     char mot_initial[TAILLE_MAXMOTS];
 } Joueur;
+
 
 void modifier_Main(const char* mot, char* main);
 bool verifier_mot(Joueur* joueur_act);
