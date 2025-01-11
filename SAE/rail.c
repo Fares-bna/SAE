@@ -1,9 +1,8 @@
 ﻿#pragma warning(disable:4996)
-#include "partie.h"
-#include "joueur.h"
-#include "pioche.h"
-#include "dictionnaire.h"
-#include "rail.h"
+#include <stdio.h>
+#include <string.h>
+#include "rail.h" // Nécessaire pour la structure Rails et les fonctions associées
+
 
 //a enlever 
 
@@ -136,7 +135,6 @@ bool verifier_main(char* mot, const char* mot_main, Joueur* joueur_act) {
 }
 
 
-
 //Pour le recto
 bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot, char* mot_rail, char* mot_main, const char cote) {
 
@@ -255,28 +253,7 @@ bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot,
 
 
 
-void ajouter_mot(Rails* rail, Joueur* joueur_act) {
-    char cote = '\0';
-    char mot_entier[MAX_RAIL+QTE_PARENTHESES] = ""; 
-    char mot_rail[TAILLE_MAXMOTS-1];
-    char mot_main[TAILLE_MAXMOTS-1];
-    do {
 
 
-
-        do {
-            printf("%d> ", joueur_act->NoJoueur);
-            scanf(" %c", &cote);
-            scanf(" %s", mot_entier);
-
-        } while (cote != 'R' && cote != 'V');
-
-       
-        
-
-    } while (!verifier_introduction(rail, joueur_act, mot_entier, &mot_rail, &mot_main, cote));
-
-    
-}
 
   
