@@ -5,6 +5,9 @@
 #include "dictionnaire.h"
 #include "rail.h"
 
+//a enlever 
+#define MAX_
+
 void inverserRail(Rails* rail_jeu) {
 
 
@@ -41,22 +44,69 @@ void initRail(Joueur* joueur1, Joueur* joueur2, Rails* rail_jeu) {
     inverserRail(rail_jeu);
 }
 
-void ajouter_mot(Partie* jeu) {
-    char cote = "";
+void simplifier(char* mot) {
+    int j = 0; // Index pour le résultat
+    for (int i = 0; mot[i] != '\0'; i++) {
+        // Copier uniquement les caractères qui ne sont pas des parenthèses
+        if (mot[i] != '(' && mot[i] != ')') {
+            mot[j++] = mot[i];  // Modifier directement le tableau 'mot'
+        }
+    }
+    mot[j] = '\0'; // Ajouter le caractère nul à la fin
+}
+
+//Pour le recto
+bool verifier_introduction(Rails* rail, const char* mot, const char cote) {
+    
+    if (cote == 'R') {
+        int temoin = 0;
+        printf("%d", strlen(mot));
+        for (int i = 0; i < strlen(mot); ++i) {
+            if (mot[i] == rail->recto[i]) {
+                ++temoin;
+            }
+        }
+        return temoin == strlen(mot);
+
+    }
+
+    if (cote == 'V') {
+        int temoin = 0;
+        int jade = 0;
+        
+        for (int i = strlen(rail->verso) - 1; i > (strlen(rail->verso) - strlen(mot)) - 1; --i) {
+            if (mot[strlen(mot) - 1 - jade] == rail->verso[i]) {
+                ++temoin; 
+            }  ++jade;
+        }
+
+        printf("%d\n", temoin);
+        return temoin == strlen(mot);
+
+    }
+
+
+    return false;
+
+
+}
+
+
+
+void ajouter_mot(Partie* jeu,  Joueur* joueur_act) {
+    char cote = '\0';
+    char mot_rail[MAX_RAIL] = "";
     
     do {
-        scanf('%c', cote);
-    } while (!strcmp(cote, 'R') == 0 || !strcmp(cote, 'V') == 0);
+        printf("%d> ", joueur_act->NoJoueur);
+        scanf(" %c", &cote);
+    } while (cote != 'R' && cote != 'V');
 
-    if (strcmp(cote, 'R') == 0) {
-        char mot[MAX_RAIL]="";
-        scanf("(%c)", mot);
-        printf("%c", mot);
+        scanf(" (%s)", mot_rail);
+        simplifier(mot_rail);
+        verifier_introduction(&jeu->rail, mot_rail, cote);
         //ici utiliser strncpy / strcst selon la mm logique que initRail
-    }
+    
 
-    if (strcmp(cote, 'V') == 0) {
-
-    }
-
+  
 }
