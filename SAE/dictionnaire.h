@@ -3,3 +3,4 @@
 
 
 #define CHAINE 100  // Définition de la taille du buffer
+

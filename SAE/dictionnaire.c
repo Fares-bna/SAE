@@ -25,3 +25,5 @@ bool verifDico(const char* mot) {
     return false;
 }
 
+
+

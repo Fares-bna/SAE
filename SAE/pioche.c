@@ -60,6 +60,7 @@ void affiche_main(Joueur* joueur_act, int taille_main) {
 }
 
 
+
 // Fonction pour trier la main d'un joueur
 void trier_et_afficher_main(Joueur* joueur_act) {
 

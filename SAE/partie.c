@@ -20,6 +20,7 @@
 
 
 
+
 // Fonction pour d�marrer la partie
 void initialiserPartie(Partie* jeu) {
     srand(time(NULL));

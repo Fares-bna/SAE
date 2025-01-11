@@ -18,4 +18,6 @@ typedef struct {
 *@param[in] joueur1->mot_initial Le  mot entr� par le premier joueur
 *@param[in] joueur2->mot_initial Le  mot entr� par le deuxi�me joueur
 *@param[out] rail Le rail, prenant ici la valeur des deux mots mis c�te � c�te (respectant l'ordre alphab�tique)
+* 
+* 
 */

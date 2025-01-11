@@ -56,4 +56,5 @@ void ajouter_mot(Partie* jeu) {
     if (strcmp(cote, 'R') == 0) {
 
     }
+
 }

@@ -146,3 +146,6 @@ void ranger_main(Joueur* joueur_act, int taille_main) {
 
 
 
+
+
+
