@@ -49,7 +49,7 @@ bool verifier_mot(Joueur* joueur_act) {
 
 
 void demanderMot(Joueur* joueur_act) {
-    char mot[TAILLE_MAXMOTS];
+    
 
     do {
         printf("%d> ", joueur_act->NoJoueur);

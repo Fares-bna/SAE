@@ -43,12 +43,13 @@ void initRail(Joueur* joueur1, Joueur* joueur2, Rails* rail_jeu) {
 
 void ajouter_mot(Partie* jeu) {
     char cote = "";
-    char mot[MAX_RAIL];
+    
     do {
         scanf('%c', cote);
     } while (!strcmp(cote, 'R') == 0 || !strcmp(cote, 'V') == 0);
 
     if (strcmp(cote, 'R') == 0) {
+        char mot[MAX_RAIL]="";
         scanf("(%c)", mot);
         //ici utiliser strncpy / strcst selon la mm logique que initRail
     }
