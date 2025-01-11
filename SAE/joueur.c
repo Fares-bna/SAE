@@ -18,7 +18,7 @@ void modifier_Main(const char* mot, char* main) {
     for (int i = 0; i < strlen(mot); i++) {
         for (int j = 0; j < strlen(main); j++)
         {
-            if (mot[i] == main[j]) { //Si la lettre du mot correspond à une lettre du chevalet, on incrémente la valeur témoin et on continue la boucle
+            if (mot[i] == main[j]) { 
                 main[j] = '0';
                 break;
             }
@@ -45,6 +45,7 @@ bool verifier_mot(Joueur* joueur_act) {
         for (int j = 0; j < TAILLE_MAIN; ++j) { //Pour chaque lettre, on regarde l'entièreté de la main du joueur..
 
             if (joueur_act->mot_initial[i] == joueur_act->main_joueur[j]) { //Si la lettre du mot correspond à une lettre du chevalet, on incrémente la valeur témoin et on continue la boucle
+               
                 ++temoin;
                 break;
             }
@@ -90,12 +91,7 @@ void creation_joueur(char* pioche, Joueur* joueur_act, int* nbJoueur, int* taill
 
 
 void ranger_main(Joueur* joueur_act, int taille_main) {
-    // Index pour les lettres valides
-
-   // Parcours de la main
-
-
-   // Parcours de la main
+ 
     int index = 0; // Indice pour les lettres non-nulles
     for (int i = 0; i < taille_main; i++) {
         if (joueur_act->main_joueur[i] != '0') { // Si la lettre n'est pas un '0'
@@ -107,8 +103,7 @@ void ranger_main(Joueur* joueur_act, int taille_main) {
         }
     }
 
-    // A la fin, tous les '0' sont déjà à la fin, donc la main est déjà correctement réorganisée.
-
+    
 
 
     // Remplir le reste avec '0'

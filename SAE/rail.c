@@ -120,7 +120,9 @@ bool verifier_main(const char* mot_main, Joueur* joueur_act) {
 
     if (temoin == (TAILLE_MAXMOTS - 1)) {
 
-        modifier_Main(joueur_act->mot_initial, &joueur_act->main_joueur);
+        modifier_Main(mot_main, &joueur_act->main_joueur);
+        ranger_main(&joueur_act, strlen(joueur_act->main_joueur));
+
         return true;
     }
 
@@ -130,7 +132,7 @@ bool verifier_main(const char* mot_main, Joueur* joueur_act) {
 
 
 //Pour le recto
-bool verifier_introduction(Rails* rail_act, const char* mot, char* mot_rail, char* mot_main, const char cote) {
+bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot, char* mot_rail, char* mot_main, const char cote) {
 
     if (strlen(mot) < 2 && strlen(mot) > 4) {
         return false;
@@ -157,7 +159,9 @@ bool verifier_introduction(Rails* rail_act, const char* mot, char* mot_rail, cha
                     ++temoin;
                 }
             }
-            return temoin == strlen(mot_rail);
+            if (temoin == strlen(mot_rail)) {
+                return verifier_main(mot_main, joueur_act);
+            }
 
         }
     
@@ -177,7 +181,9 @@ bool verifier_introduction(Rails* rail_act, const char* mot, char* mot_rail, cha
                 }  ++index;
             }
 
-            return temoin == strlen(mot_rail);
+            if (temoin == strlen(mot_rail)){
+                return verifier_main(mot_main, joueur_act);
+            }
 
         }
 
@@ -201,7 +207,9 @@ bool verifier_introduction(Rails* rail_act, const char* mot, char* mot_rail, cha
                     ++temoin;
                 }
             }
-            return temoin == strlen(mot_rail);
+            if (temoin == strlen(mot_rail)) {
+                return verifier_main(mot_main, joueur_act);
+            }
 
         }
 
@@ -221,7 +229,9 @@ bool verifier_introduction(Rails* rail_act, const char* mot, char* mot_rail, cha
                 }  ++index;
             }
 
-            return temoin == strlen(mot_rail);
+            if (temoin == strlen(mot_rail)) {
+                return verifier_main(mot_main, joueur_act);
+            }
 
         }
 
@@ -256,7 +266,7 @@ void ajouter_mot(Partie* jeu, Joueur* joueur_act) {
        
         
 
-    } while (!verifier_introduction(&jeu->rail, mot_entier, &mot_rail, &mot_main, cote));
+    } while (!verifier_introduction(&jeu->rail, mot_entier, &mot_rail, &mot_main, cote, joueur_act));
 
     
 }
