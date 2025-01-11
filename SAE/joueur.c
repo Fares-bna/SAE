@@ -11,7 +11,16 @@
 #include "joueur.h"
 
 
+void creation_joueur(char* pioche, Joueur* joueur_act, int* nbJoueur, int* taille_pioche) {
 
+    joueur_act->NoJoueur = *nbJoueur;
+    tirer_main(pioche, joueur_act, taille_pioche);
+    trier_et_afficher_main(joueur_act);
+
+    ++(*nbJoueur);
+
+
+}
 
 void modifier_Main(const char* mot, char* main) {
 
@@ -36,27 +45,36 @@ void modifier_Main(const char* mot, char* main) {
 
 bool verifier_mot(Joueur* joueur_act) {
     int temoin = 0;
+
     if (strlen(joueur_act->mot_initial) != 4) {
         return false;
     }
 
+    char temp[TAILLE_MAIN];
+
+    strncpy(temp, joueur_act->main_joueur, TAILLE_MAIN);
     for (int i = 0; i < strlen(joueur_act->mot_initial); ++i) { //On parcours l'entiereté du mot entré, jusqu'arriver au caractère nul
 
         for (int j = 0; j < TAILLE_MAIN; ++j) { //Pour chaque lettre, on regarde l'entièreté de la main du joueur..
 
             if (joueur_act->mot_initial[i] == joueur_act->main_joueur[j]) { //Si la lettre du mot correspond à une lettre du chevalet, on incrémente la valeur témoin et on continue la boucle
                
-                ++temoin;
-                break;
+                if (temp[j] != '0') {
+
+                    temp[j] = '0';
+                    ++temoin;
+                    break;
+                }
+
+              
             }
         }
 
     }
 
 
-
     if (temoin == (TAILLE_MAXMOTS - 1)) {
-
+        strcpy(joueur_act->main_joueur, temp);
         modifier_Main(joueur_act->mot_initial, &joueur_act->main_joueur);
         return true;
     }
@@ -78,19 +96,10 @@ void demanderMot(Joueur* joueur_act) {
     } while (!verifDico(joueur_act->mot_initial));
 
 }
-void creation_joueur(char* pioche, Joueur* joueur_act, int* nbJoueur, int* taille_pioche) {
-
-    joueur_act->NoJoueur = *nbJoueur;
-    tirer_main(pioche, joueur_act, taille_pioche);
-    trier_et_afficher_main(joueur_act);
-
-    ++(*nbJoueur);
 
 
-}
 
-
-void ranger_main(Joueur* joueur_act, int taille_main) {
+void ranger_main(Joueur* joueur_act, int taille_main, int taille_mot) {
  
     int index = 0; // Indice pour les lettres non-nulles
     for (int i = 0; i < taille_main; i++) {
@@ -103,15 +112,13 @@ void ranger_main(Joueur* joueur_act, int taille_main) {
         }
     }
 
-    
-
 
     // Remplir le reste avec '0'
-    for (int i = TAILLE_MAIN - (TAILLE_MAXMOTS - 1); i < taille_main; i++) {
+    for (int i = taille_main - (taille_mot); i < taille_main; i++) {
         joueur_act->main_joueur[i] = '\0';
     }
 
-    affiche_main(joueur_act, TAILLE_MAIN - (TAILLE_MAXMOTS - 1));
+    
 }
 
 

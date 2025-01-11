@@ -12,15 +12,6 @@
 
 
 
-
-//V�rifie que le mot appartient � la main du joueur
-
-
-
-
-
-
-
 // Fonction pour d�marrer la partie
 void initialiserPartie(Partie* jeu) {
     srand(time(NULL));
@@ -34,25 +25,26 @@ void initialiserPartie(Partie* jeu) {
 
     initialiser_Pioche(&(jeu->pioche));
 
-    creation_joueur(&(jeu->pioche), &(jeu->joueur1), &nbrJoueur, &taille_pioche);
-    creation_joueur(&(jeu->pioche), &(jeu->joueur2), &nbrJoueur, &taille_pioche);
-
+    creation_joueur(&jeu->pioche, &jeu->joueur1, &nbrJoueur, &taille_pioche);
+    creation_joueur(&jeu->pioche, &jeu->joueur2, &nbrJoueur, &taille_pioche);
 
     do {
         demanderMot(&jeu->joueur1);
-    } while (!verifier_mot(&jeu->joueur1));
+    } while (!verifier_mot(jeu->joueur1));
 
     do {
         demanderMot(&jeu->joueur2);
-    } while (strcmp(jeu->joueur1.mot_initial, jeu->joueur2.mot_initial) == 0 || !verifier_mot(&jeu->joueur2) );
+    } while (strcmp(jeu->joueur1.mot_initial, jeu->joueur2.mot_initial) == 0 || !verifier_mot(jeu->joueur2) );
 
 
-    ranger_main(&jeu->joueur1, TAILLE_MAIN);
-    ranger_main(&jeu->joueur2, TAILLE_MAIN);
+    ranger_main(&jeu->joueur1, TAILLE_MAIN, TAILLE_MAXMOTS-1);
+    affiche_main(jeu->joueur1, TAILLE_MAIN - (TAILLE_MAXMOTS - 1));
+    ranger_main(&jeu->joueur2, TAILLE_MAIN, TAILLE_MAXMOTS-1);
+    affiche_main(jeu->joueur2, TAILLE_MAIN - (TAILLE_MAXMOTS - 1));
 
     initRail(jeu->joueur1, jeu->joueur2, &jeu->rail);
-    ajouter_mot(jeu, jeu->joueur1);
-    ajouter_mot(jeu, jeu->joueur2);
+    ajouter_mot(&jeu->rail, jeu->joueur1);
+    ajouter_mot(&jeu->rail, jeu->joueur2);
 }
 
 

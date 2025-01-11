@@ -97,8 +97,14 @@ char cote_rail(const char* mot) {
     return 'G';
 }
 
-bool verifier_main(const char* mot_main, Joueur* joueur_act) {
+bool verifier_main(char* mot, const char* mot_main, Joueur* joueur_act) {
     int temoin = 0;
+
+    simplifier(mot);
+    if (!verifDico(mot)) {
+        return false;
+    }
+
     if (strlen(mot_main) >= TAILLE_MAXMOTS) {
         return false;
     }
@@ -118,10 +124,10 @@ bool verifier_main(const char* mot_main, Joueur* joueur_act) {
 
 
 
-    if (temoin == (TAILLE_MAXMOTS - 1)) {
+    if (temoin == (strlen(mot_main))) {
 
         modifier_Main(mot_main, &joueur_act->main_joueur);
-        ranger_main(&joueur_act, strlen(joueur_act->main_joueur));
+        ranger_main(joueur_act, strlen(joueur_act->main_joueur), strlen(mot_main));
 
         return true;
     }
@@ -159,8 +165,10 @@ bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot,
                     ++temoin;
                 }
             }
+
             if (temoin == strlen(mot_rail)) {
-                return verifier_main(mot_main, joueur_act);
+                return verifier_main(mot, mot_main, joueur_act);
+
             }
 
         }
@@ -182,7 +190,7 @@ bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot,
             }
 
             if (temoin == strlen(mot_rail)){
-                return verifier_main(mot_main, joueur_act);
+                return verifier_main(mot, mot_main, joueur_act);
             }
 
         }
@@ -208,7 +216,7 @@ bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot,
                 }
             }
             if (temoin == strlen(mot_rail)) {
-                return verifier_main(mot_main, joueur_act);
+                return verifier_main(mot, mot_main, joueur_act);
             }
 
         }
@@ -230,7 +238,7 @@ bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot,
             }
 
             if (temoin == strlen(mot_rail)) {
-                return verifier_main(mot_main, joueur_act);
+                return verifier_main(mot, mot_main, joueur_act);
             }
 
         }
@@ -247,7 +255,7 @@ bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot,
 
 
 
-void ajouter_mot(Partie* jeu, Joueur* joueur_act) {
+void ajouter_mot(Rails* rail, Joueur* joueur_act) {
     char cote = '\0';
     char mot_entier[MAX_RAIL+QTE_PARENTHESES] = ""; 
     char mot_rail[TAILLE_MAXMOTS-1];
@@ -266,7 +274,7 @@ void ajouter_mot(Partie* jeu, Joueur* joueur_act) {
        
         
 
-    } while (!verifier_introduction(&jeu->rail, mot_entier, &mot_rail, &mot_main, cote, joueur_act));
+    } while (!verifier_introduction(rail, joueur_act, mot_entier, &mot_rail, &mot_main, cote));
 
     
 }
