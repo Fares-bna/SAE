@@ -18,5 +18,7 @@ bool verifier_mot(Joueur* joueur_act);
 void demanderMot(Joueur* joueur_act);
 void creation_joueur(char* pioche, Joueur* joueur_act, int* nbJoueur, int* taille_pioche);
 void ranger_main(Joueur* joueur_act, int taille_main);
-
+void tirer_main(char* pioche, Joueur* joueur_act, int* taille_pioche);
+void affiche_main(Joueur* joueur_act, int taille_main);
+void trier_et_afficher_main(Joueur* joueur_act);
 

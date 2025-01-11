@@ -4,4 +4,3 @@
 
 bool verifDico(const char* mot);
 
-

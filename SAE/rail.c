@@ -244,28 +244,6 @@ bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot,
 
 
 
-void ajouter_mot(Partie* jeu, Joueur* joueur_act) {
-    char cote = '\0';
-    char mot_entier[MAX_RAIL+QTE_PARENTHESES] = ""; 
-    char mot_rail[TAILLE_MAXMOTS-1];
-    char mot_main[TAILLE_MAXMOTS-1];
-    do {
 
-
-
-        do {
-            printf("%d> ", joueur_act->NoJoueur);
-            scanf(" %c", &cote);
-            scanf(" %s", mot_entier);
-
-        } while (cote != 'R' && cote != 'V');
-
-       
-        
-
-    } while (!verifier_introduction(&jeu->rail, mot_entier, &mot_rail, &mot_main, cote, joueur_act));
-
-    
-}
 
   

@@ -1,10 +1,9 @@
 #pragma warning(disable:4996)
-#include <stdio.h>     // Pour les entrées/sorties standard
+#include <stdio.h>     // Pour les entrï¿½es/sorties standard
 #include <stdbool.h>   // Pour le type bool
-#include <string.h>    // Pour les manipulations de chaînes
-#include "joueur.h"    // Nécessaire pour la structure Joueur et les fonctions associées
-#include "pioche.h"    // Pour interagir avec la pioche si nécessaire
-
+#include <string.h>    // Pour les manipulations de chaï¿½nes
+#include "joueur.h"    // Nï¿½cessaire pour la structure Joueur et les fonctions associï¿½es
+#include "dictionnaire.h"
 
 
 
@@ -35,11 +34,11 @@ bool verifier_mot(Joueur* joueur_act) {
         return false;
     }
 
-    for (int i = 0; i < strlen(joueur_act->mot_initial); ++i) { //On parcours l'entiereté du mot entré, jusqu'arriver au caractère nul
+    for (int i = 0; i < strlen(joueur_act->mot_initial); ++i) { //On parcours l'entieretï¿½ du mot entrï¿½, jusqu'arriver au caractï¿½re nul
 
-        for (int j = 0; j < TAILLE_MAIN; ++j) { //Pour chaque lettre, on regarde l'entièreté de la main du joueur..
+        for (int j = 0; j < TAILLE_MAIN; ++j) { //Pour chaque lettre, on regarde l'entiï¿½retï¿½ de la main du joueur..
 
-            if (joueur_act->mot_initial[i] == joueur_act->main_joueur[j]) { //Si la lettre du mot correspond à une lettre du chevalet, on incrémente la valeur témoin et on continue la boucle
+            if (joueur_act->mot_initial[i] == joueur_act->main_joueur[j]) { //Si la lettre du mot correspond ï¿½ une lettre du chevalet, on incrï¿½mente la valeur tï¿½moin et on continue la boucle
                
                 ++temoin;
                 break;
@@ -90,11 +89,11 @@ void ranger_main(Joueur* joueur_act, int taille_main) {
     int index = 0; // Indice pour les lettres non-nulles
     for (int i = 0; i < taille_main; i++) {
         if (joueur_act->main_joueur[i] != '0') { // Si la lettre n'est pas un '0'
-            joueur_act->main_joueur[index] = joueur_act->main_joueur[i]; // Déplace la lettre
+            joueur_act->main_joueur[index] = joueur_act->main_joueur[i]; // Dï¿½place la lettre
             if (index != i) {
                 joueur_act->main_joueur[i] = '0'; // Remplace l'ancienne position par '0'
             }
-            index++; // Incrémente l'indice pour la prochaine lettre valide
+            index++; // Incrï¿½mente l'indice pour la prochaine lettre valide
         }
     }
 
@@ -109,6 +108,43 @@ void ranger_main(Joueur* joueur_act, int taille_main) {
     affiche_main(joueur_act, TAILLE_MAIN - (TAILLE_MAXMOTS - 1));
 }
 
+// Fonction pour tirer une main de chevalets
+void tirer_main(char* pioche, Joueur* joueur_act, int* taille_pioche) {
+
+    for (int i = 0; i < *taille_pioche; ++i) {
+        joueur_act->main_joueur[i] = pioche[*taille_pioche - i - 1];
+
+    }
+    *taille_pioche -= TAILLE_MAIN;
+
+}
+
+void affiche_main(Joueur* joueur_act, int taille_main) {
+
+    printf("%d : ", joueur_act->NoJoueur);
+    for (int i = 0; i < taille_main; ++i) {
+        printf("%c", joueur_act->main_joueur[i]);  // Affiche chaque lettre dans la main
+    }
+    printf("\n");
+}
+
+
+
+// Fonction pour trier la main d'un joueur
+void trier_et_afficher_main(Joueur* joueur_act) {
+
+    for (int i = 0; i < TAILLE_MAIN - 1; i++) {
+        for (int j = i + 1; j < TAILLE_MAIN; j++) {
+            if (joueur_act->main_joueur[i] > joueur_act->main_joueur[j]) {
+                char temp = joueur_act->main_joueur[i];
+                joueur_act->main_joueur[i] = joueur_act->main_joueur[j];
+                joueur_act->main_joueur[j] = temp;
+            }
+        }
+    }
+
+    affiche_main(joueur_act, TAILLE_MAIN);
+}
 
 
 

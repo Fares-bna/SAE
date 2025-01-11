@@ -3,7 +3,6 @@
 
 #include "joueur.h"
 #include "rail.h"
-#include "pioche.h"
 
 typedef struct {
     char* pioche;
@@ -12,5 +11,6 @@ typedef struct {
     Rails rail;
 } Partie;
 
-void initialiserPartie(Partie* jeu);
 
+void initialiserPartie(Partie* jeu);
+void ajouter_mot(Partie* jeu, Joueur* joueur_act);

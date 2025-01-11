@@ -1,6 +1,7 @@
 ﻿#include <stdio.h>
 #include <stdlib.h>
 #include "partie.h"  // Nécessaire pour la structure Partie et la fonction initialiserPartie
+#include "pioche.h"
 
 
 
@@ -10,6 +11,7 @@ int main() {
 
     // Initialisation des composants de la partie
     initialiserPartie(&jeu);
+
 
     printf("La partie Octo-Verso a été initialisée avec succès !\n");
 

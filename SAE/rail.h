@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "joueur.h"
-#include "partie.h"
 
 #define MAX_RAIL 8
 #define QTE_PARENTHESES 2
@@ -21,6 +20,6 @@ bool separer_mots(const char* mot_entier, char* mot_rail, char* mot_main);
 char cote_rail(const char* mot);
 bool verifier_main(const char* mot_main, Joueur* joueur_act);
 bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot, char* mot_rail, char* mot_main, const char cote);
-void ajouter_mot(Partie* jeu, Joueur* joueur_act);
+
 
 

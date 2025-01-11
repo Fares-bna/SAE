@@ -1,5 +1,5 @@
 #pragma warning(disable : 4996)
-#define MAX_LIGNE 28 //Le nombre maximum de lettre dans le plus long mot du dictionnaire de la langue fran?aise (+1)
+#define MAX_LIGNE 28
 #include <stdio.h>
 #include <string.h>
 #include <stdbool.h>
