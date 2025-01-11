@@ -58,6 +58,10 @@ void simplifier(char* mot) {
 //Pour le recto
 bool verifier_introduction(Rails* rail, const char* mot, const char cote) {
     
+    if (strlen(mot) < 2 && strlen(mot) > 4) {
+        return false;
+    }
+
     if (cote == 'R') {
         int temoin = 0;
         printf("%d", strlen(mot));
@@ -72,15 +76,14 @@ bool verifier_introduction(Rails* rail, const char* mot, const char cote) {
 
     if (cote == 'V') {
         int temoin = 0;
-        int jade = 0;
+        int index = 0;
         
         for (int i = strlen(rail->verso) - 1; i > (strlen(rail->verso) - strlen(mot)) - 1; --i) {
-            if (mot[strlen(mot) - 1 - jade] == rail->verso[i]) {
+            if (mot[strlen(mot) - 1 - index] == rail->verso[i]) {
                 ++temoin; 
-            }  ++jade;
+            }  ++index;
         }
 
-        printf("%d\n", temoin);
         return temoin == strlen(mot);
 
     }
@@ -93,20 +96,22 @@ bool verifier_introduction(Rails* rail, const char* mot, const char cote) {
 
 
 
-void ajouter_mot(Partie* jeu,  Joueur* joueur_act) {
+void ajouter_mot(Partie* jeu, Joueur* joueur_act) {
     char cote = '\0';
     char mot_rail[MAX_RAIL] = "";
-    
     do {
-        printf("%d> ", joueur_act->NoJoueur);
-        scanf(" %c", &cote);
-    } while (cote != 'R' && cote != 'V');
+
+
+
+        do {
+            printf("%d> ", joueur_act->NoJoueur);
+            scanf(" %c", &cote);
+        } while (cote != 'R' && cote != 'V');
 
         scanf(" (%s)", mot_rail);
         simplifier(mot_rail);
-        verifier_introduction(&jeu->rail, mot_rail, cote);
-        //ici utiliser strncpy / strcst selon la mm logique que initRail
-    
+
+    } while (verifier_introduction(&jeu->rail, mot_rail, cote));
+}
 
   
-}
