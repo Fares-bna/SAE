@@ -7,22 +7,21 @@
 #include "pioche.h"
 
 
-void affichage_correct(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse, char* mot_main, char* mot_rail, char cote, int* taille_main_adv, int taille_main_act, char* memoire) {
+void affichage_correct(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse, char* mot_main, char* mot_rail, char cote, int* taille_main_adv, int taille_main_act, char* memoire, char* pioche, int* taille_pioche) {
     char direction = cote_rail(memoire);
-    gerer_rail(direction, rail, joueur_act, joueur_adverse, mot_main, mot_rail, cote, taille_main_adv, taille_main_act, memoire);
+    gerer_rail(direction, rail, joueur_act, joueur_adverse, mot_main, mot_rail, cote, taille_main_adv, taille_main_act, memoire, pioche, taille_pioche);
 }
 
-void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse) {
+void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse, char* pioche, int* taille_pioche) {
     char cote = '\0';
-    char mot_entier[MAX_RAIL + QTE_PARENTHESES] = "";
-    char memoire[MAX_RAIL + QTE_PARENTHESES];
-    char mot_rail[TAILLE_MAXMOTS - 1];
-    char mot_main[TAILLE_MAXMOTS - 1];
+    char mot_entier[MAX_RAIL + QTE_PARENTHESES+1] = "";
+    char memoire[MAX_RAIL + QTE_PARENTHESES+1];
+    char mot_rail[TAILLE_MAXMOTS];
+    char mot_main[TAILLE_MAXMOTS];
 
     //pour la fin
     char ancien_rail_recto[MAX_RAIL - 1];
     char ancien_rail_verso[MAX_RAIL - 1];
-
     do {
 
 
@@ -30,13 +29,21 @@ void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse) {
         do {
             printf("%d> ", joueur_act->NoJoueur);
             scanf(" %c", &cote);
+
+            if (cote == '-') {
+
+                echanger_lettre()
+
+           }
+
             scanf(" %s", mot_entier);
 
             strcpy(memoire, mot_entier);
 
+           
+
+
         } while (cote != 'R' && cote != 'V');
-
-
 
 
     } while (!verifier_introduction(rail, joueur_act, mot_entier, &mot_rail, &mot_main, cote));
@@ -48,14 +55,9 @@ void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse) {
 
     //affiche les joueurs en fonction de leur numero
 
-    affichage_correct(rail, joueur_act, joueur_adverse, mot_main, mot_rail, cote, &taille_main_adv, taille_main_act, memoire);
+    affichage_correct(rail, joueur_act, joueur_adverse, &mot_main, mot_rail, cote, &taille_main_adv, taille_main_act, memoire, pioche, taille_pioche);
     
     
-    if (verifier_octo(memoire, &mot_rail, &mot_main)) {
-        supprimer_lettre(joueur_act, &taille_main_act);
-    }
-
-
 }
 
 // Fonction pour d�marrer la partie
@@ -65,7 +67,7 @@ void initialiserPartie(Partie* jeu) {
     int* taille_pioche = TAILLE_PIOCHE;
 
 
-    jeu->pioche = (char*)malloc(TAILLE_PIOCHE * sizeof(char));
+    jeu->pioche = (char*)calloc(TAILLE_PIOCHE, sizeof(char));
     if (jeu->pioche == NULL) {
         free(jeu->pioche);
     }
@@ -94,9 +96,20 @@ void initialiserPartie(Partie* jeu) {
 
 
     initRail(&jeu->joueur1, &jeu->joueur2, &jeu->rail);
-    ajouter_mot(&jeu->rail, &jeu->joueur1, &jeu->joueur2);
-    ajouter_mot(&jeu->rail, &jeu->joueur2,&jeu->joueur1);
-}
+
+
+    do
+    {
+
+    
+    ajouter_mot(&jeu->rail, &jeu->joueur1, &jeu->joueur2, jeu->pioche, &taille_pioche);
+    ajouter_mot(&jeu->rail, &jeu->joueur2,&jeu->joueur1, jeu->pioche, &taille_pioche);
+
+
+
+    } while (jeu->joueur1.main_joueur[0]!='\0' && jeu->joueur2.main_joueur[0] != '\0');
+
+} 
 
 
 

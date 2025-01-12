@@ -25,7 +25,7 @@ void affiche_main(Joueur* joueur_act, int taille_main);
 void trier_et_afficher_main(Joueur* joueur_act, const int taille_main);
 void adapter_main(char* mot_ajt, const char* referentiel, Joueur* joueur_concerne, int* taille_main);
 void seulementTrierMain(Joueur* joueur_act, const int taille_main);
-void supprimer_lettre(Joueur* joueur_act, int taille_main);
+void supprimer_lettre(Joueur* joueur_act, int taille_main, char* pioche, int* taille_pioche);
 
 
 

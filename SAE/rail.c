@@ -315,7 +315,9 @@ void adapter_railDroit(Rails* rail_act, Joueur* joueur_adv, char* mot_main, cons
             // Terminer la chaîne avec '\0'
             rail_act->recto[strlen(rail_act->recto)] = '\0';
             adapter_main(&reserve, mot_main, joueur_adv, taille_main);
-
+            for (int i = 0; i < strlen(mot_main); ++i) {
+                reserve[i] = '0';
+            }
         
 
     }
@@ -343,7 +345,9 @@ void adapter_railDroit(Rails* rail_act, Joueur* joueur_adv, char* mot_main, cons
             rail_act->verso[strlen(rail_act->verso)] = '\0';
             adapter_main(&reserve, mot_main, joueur_adv, taille_main);
 
-
+            for (int i = 0; i < strlen(mot_main); ++i) {
+                reserve[i] = '0';
+            }
 
 
 
@@ -371,6 +375,10 @@ void adapter_railGauche(Rails * rail_act, Joueur * joueur_adv, char* mot_main, c
                 rail_act->recto[strlen(rail_act->recto) - strlen(mot_main) + i] = mot_main[i];
             }
             adapter_main(&reserve, mot_main, joueur_adv, taille_main);
+
+            for (int i = 0; i < strlen(mot_main); ++i) {
+                reserve[i] = '0';
+            }
         }
 
 
@@ -395,7 +403,9 @@ void adapter_railGauche(Rails * rail_act, Joueur * joueur_adv, char* mot_main, c
                 rail_act->verso[strlen(rail_act->verso) - strlen(mot_main) + i] = mot_main[i];
             }
             adapter_main(&reserve, mot_main, joueur_adv, taille_main);
-            
+            for (int i = 0; i < strlen(mot_main); ++i) {
+                reserve[i] = '0';
+            }
         }
 
        
@@ -404,6 +414,7 @@ void adapter_railGauche(Rails * rail_act, Joueur * joueur_adv, char* mot_main, c
 void afficher_main_et_rail(Joueur* joueur1, int taille1, Joueur* joueur2, int taille2, char cote, Rails* rail) {
     affiche_main(joueur1, taille1);
     affiche_main(joueur2, taille2);
+
 
     if (cote == 'R') {
         printf("R : %s\n", rail->recto);
@@ -417,7 +428,8 @@ void afficher_main_et_rail(Joueur* joueur1, int taille1, Joueur* joueur2, int ta
     }
 }
 
-void gerer_rail(char direction, Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse, char* mot_main, char* mot_rail, char cote, int* taille_main_adv, int taille_main_act, char* memoire) {
+void gerer_rail(char direction, Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse, char* mot_main, char* mot_rail, char cote, int* taille_main_adv, int taille_main_act, char* memoire, char* pioche, int* taille_pioche) {
+
     if (direction == 'D') {
         adapter_railGauche(rail, joueur_adverse, mot_main, cote, taille_main_adv);
     }
@@ -426,9 +438,12 @@ void gerer_rail(char direction, Rails* rail, Joueur* joueur_act, Joueur* joueur_
     }
 
     if (joueur_act->NoJoueur == 1) {
-        
-        
+       
+        if (verifier_octo(memoire, &mot_rail, &mot_main)) {
+            afficher_main_et_rail(joueur_act, taille_main_act, joueur_adverse, *taille_main_adv, cote, rail);
+            supprimer_lettre(joueur_act, taille_main_act, pioche, taille_pioche);
 
+        }
         
         
 
@@ -436,7 +451,11 @@ void gerer_rail(char direction, Rails* rail, Joueur* joueur_act, Joueur* joueur_
     }
     else {
 
-        
+        if (verifier_octo(memoire, &mot_rail, &mot_main)) {
+            afficher_main_et_rail(joueur_adverse, *taille_main_adv, joueur_act, taille_main_act, cote, rail);
+            supprimer_lettre(joueur_act, taille_main_act, pioche, taille_pioche);
+        }
+
         afficher_main_et_rail(joueur_adverse, *taille_main_adv, joueur_act, taille_main_act, cote, rail);
     }
 }

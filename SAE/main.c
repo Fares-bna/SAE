@@ -13,7 +13,7 @@
     Partie octoverso; 
     initialiserPartie(&octoverso);
     return 0;
-
+    octoverso.pioche;
 
     }
 

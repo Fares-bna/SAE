@@ -14,6 +14,8 @@ void tirer_main(char* pioche, Joueur* joueur_act, int* taille_pioche) {
     }
     joueur_act->main_joueur[TAILLE_MAIN] = '\0';
     *taille_pioche -= TAILLE_MAIN; 
+    pioche[*taille_pioche] = '\0';
+    
 }
 void modifier_Main(const char* mot, char* main) {
 
@@ -193,22 +195,41 @@ void adapter_main(char* mot_ajt, const char* referentiel, Joueur* joueur_concern
 }
 
 
-void supprimer_lettre(Joueur* joueur_act, int taille_main) {
-    printf("-%d> ", joueur_act->NoJoueur);
-    char delete;
+void echanger_lettre(Joueur* joueur_act, int taille_main, char* pioche, int* taille_pioche, char signe) {
+    char delete, temp;
+    int position = rand() % *taille_pioche;
     scanf(" %c", &delete);
 
+    temp = delete;
+    delete = pioche[position];
+    pioche[position] = temp;
+    ranger_main(joueur_act->main_joueur, taille_main, 0);
 
-    for (int i = 0; i < taille_main; ++i) {
-        if (joueur_act->main_joueur[i] == delete) {
+
+}
+
+void supprimer_lettre(Joueur* joueur_act, int taille_main, char* pioche, int* taille_pioche) {
+    int temoin = 0;
+  do
+    {  
+    printf("-%d> ", joueur_act->NoJoueur);
+    char delete;
+   
+    scanf(" %c", &delete);
+
+    
+    
+        for (int i = 0; i < taille_main; ++i) {
+            if (joueur_act->main_joueur[i] == delete) {
             joueur_act->main_joueur[i] = '0';
             ranger_main(joueur_act, taille_main, 1);
-            trier_et_afficher_main(joueur_act, taille_main);
+            remettre_pioche(delete, pioche, taille_pioche);
+            ++temoin;
             return;
+            }
         }
-    }
 
-
+    } while (temoin == 0);
 }
 
 

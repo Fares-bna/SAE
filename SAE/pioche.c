@@ -31,6 +31,18 @@ void initialiser_Pioche(char* pioche) {
     melangerPioche(pioche);
 }
 
+void remettre_pioche(char delete, char* pioche, int* taille_pioche) {
+    
+    
+    pioche[*taille_pioche] = delete;
 
+    (*taille_pioche)++;
+
+    // Terminer la chaîne avec '\0' (optionnel si vous traitez "pioche" comme un tableau de caractères brut)
+    pioche[*taille_pioche] = '\0';
+
+ 
+    melangerPioche(pioche);
+}
 
 
