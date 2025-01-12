@@ -270,7 +270,7 @@ void adapter_railDroit(Rails* rail_act, Joueur* joueur_adv, char* mot_main, cons
 
     if (cote == 'R') {
 
-       
+
         int index = 0;
         //Les deux dernières lettres sont stockées dans la reserve qui les ajoutera a la main du joueur adverse
         for (int i = strlen(rail_act->recto) - strlen(mot_main); i < strlen(rail_act->recto); ++i) {
@@ -278,42 +278,50 @@ void adapter_railDroit(Rails* rail_act, Joueur* joueur_adv, char* mot_main, cons
             ++index;
         }
 
-        // Ajouter les caractères du mot_main au début
-        for (int i = 0; i < strlen(mot_main); ++i) {
-            rail_act->recto[i] = mot_main[i];
-        }
+        for (int i = strlen(rail_act->recto) - strlen(mot_main) - 1; i >= 0; --i) {
+            rail_act->recto[i + strlen(mot_main)] = rail_act->recto[i];
 
-        // Terminer la chaîne avec '\0'
-        rail_act->recto[strlen(rail_act->recto)] = '\0';
-        adapter_main(&reserve, mot_main, joueur_adv, taille_main);
+            // Ajouter les caractères du mot_main au début
+            for (int i = 0; i < strlen(mot_main); ++i) {
+                rail_act->recto[i] = mot_main[i];
+            }
+
+            // Terminer la chaîne avec '\0'
+            rail_act->recto[strlen(rail_act->recto)] = '\0';
+            adapter_main(&reserve, mot_main, joueur_adv, taille_main);
+
+        }
 
     }
 
+        if (cote == 'V') {
 
-
-     if (cote == 'V') {
-         
             //Les deux dernières lettres sont stockées dans la reserve qui les ajoutera a la main du joueur adverse
-         int index = 0;
-         //Les deux dernières lettres sont stockées dans la reserve qui les ajoutera a la main du joueur adverse
-         for (int i = strlen(rail_act->verso) - strlen(mot_main); i < strlen(rail_act->verso); ++i) {
-             reserve[index] = rail_act->verso[i];
-             ++index;
-         }
+            int index = 0;
+            //Les deux dernières lettres sont stockées dans la reserve qui les ajoutera a la main du joueur adverse
+            for (int i = strlen(rail_act->verso) - strlen(mot_main); i < strlen(rail_act->verso); ++i) {
+                reserve[index] = rail_act->verso[i];
+                ++index;
+            }
 
-         // Ajouter les caractères du mot_main au début
-         for (int i = 0; i < strlen(mot_main); ++i) {
-             rail_act->verso[i] = mot_main[i];
-         }
+            for (int i = strlen(rail_act->recto) - strlen(mot_main) - 1; i >= 0; --i) {
+                rail_act->verso[i + strlen(mot_main)] = rail_act->verso[i];
 
-         // Terminer la chaîne avec '\0'
-         rail_act->verso[strlen(rail_act->verso)] = '\0';
-         adapter_main(&reserve, mot_main, joueur_adv, taille_main);
-     }
+            }
+            // Ajouter les caractères du mot_main au début
+            for (int i = 0; i < strlen(mot_main); ++i) {
+                rail_act->verso[i] = mot_main[i];
+            }
+
+            // Terminer la chaîne avec '\0'
+            rail_act->verso[strlen(rail_act->verso)] = '\0';
+            adapter_main(&reserve, mot_main, joueur_adv, taille_main);
 
 
 
-    
+
+
+        }
 }
 
 
