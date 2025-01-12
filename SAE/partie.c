@@ -165,7 +165,8 @@ void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse) {
 
             }
 
-            
+            else
+           
             {
 
                 

@@ -69,6 +69,7 @@ bool verifier_mot(Joueur* joueur_act) {
 }
 void affiche_main(Joueur* joueur_act, int taille_main) {
 
+    taille_main = strlen(joueur_act->main_joueur);
     printf("%d : ", joueur_act->NoJoueur);
     for (int i = 0; i < taille_main; ++i) {
         printf("%c", joueur_act->main_joueur[i]);  // Affiche chaque lettre dans la main
@@ -161,7 +162,7 @@ void ranger_main(Joueur* joueur_act, int taille_main, int taille_mot) {
 
 void adapter_main(char* mot_ajt, const char* referentiel, Joueur* joueur_concerne, int* taille_main) {
     // On calcule la nouvelle taille totale de la main
-    int nouvelle_taille = *taille_main + strlen(referentiel);
+    int nouvelle_taille = strlen(joueur_concerne->main_joueur) + strlen(referentiel);
 
     // Réallocation de la mémoire pour la nouvelle taille
     joueur_concerne->main_joueur = (char*)realloc(joueur_concerne->main_joueur, nouvelle_taille * sizeof(char));
