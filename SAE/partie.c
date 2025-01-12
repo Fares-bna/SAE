@@ -39,6 +39,8 @@ int taille_main_adv = strlen(joueur_adverse->main_joueur);
                 if (echanger_lettre(joueur_act, taille_main_act, pioche, taille_pioche)) {
                     affichage_correct(rail, joueur_act, joueur_adverse, &mot_main, mot_rail, cote, &taille_main_adv, taille_main_act, memoire, pioche, taille_pioche);
                 }
+
+                else break;
             }
 
             scanf(" %s", mot_entier);

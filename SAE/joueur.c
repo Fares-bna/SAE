@@ -206,12 +206,12 @@ bool echanger_lettre(Joueur* joueur_act, int taille_main, char* pioche, int* tai
 
             if (joueur_act->main_joueur[i] == delete) {
 
-                joueur_act->main_joueur[i] == '0';
 
-                temp = delete;
-                delete = pioche[position];
-                pioche[position] = temp;
-                ranger_main(joueur_act, taille_main, 0);
+
+                temp = pioche[position];
+                joueur_act->main_joueur[i] = temp;
+                pioche[position = temp];
+                seulementTrierMain(joueur_act, taille_main);
                 return true;
             }
 
