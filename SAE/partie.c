@@ -89,6 +89,13 @@ void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse) {
 
 
 
+
+
+
+
+
+
+
     //affichage correct
     if (cote_rail(memoire) == 'D') {
 
@@ -146,6 +153,10 @@ void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse) {
         }
 
     }
+
+
+
+    
 
     if (cote_rail(memoire) == 'G')
     {

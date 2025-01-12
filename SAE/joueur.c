@@ -149,11 +149,13 @@ void ranger_main(Joueur* joueur_act, int taille_main, int taille_mot) {
     }
 
 
-    // Remplir le reste avec '0' jusqu'à la fin, seulement si index est inférieur à taille_main
-    for (int i = taille_main-taille_mot; i < taille_main ; ++i) {
-        joueur_act->main_joueur[i] = '\0'; // Remplir le reste avec '0'
-    }
 
+    if (index != taille_main) {
+        // Remplir le reste avec '0' jusqu'à la fin, seulement si index est inférieur à taille_main
+        for (int i = taille_main - taille_mot; i < taille_main; ++i) {
+            joueur_act->main_joueur[i] = '\0'; // Remplir le reste avec '0'
+        }
+    }
 
     
 }
@@ -161,29 +163,33 @@ void ranger_main(Joueur* joueur_act, int taille_main, int taille_mot) {
 
 
 void adapter_main(char* mot_ajt, const char* referentiel, Joueur* joueur_concerne, int* taille_main) {
+    
+    
     // On calcule la nouvelle taille totale de la main
-    int nouvelle_taille = strlen(joueur_concerne->main_joueur) + strlen(referentiel);
-
+    
+    int nouvelle_taille = *taille_main + strlen(referentiel);
     // Réallocation de la mémoire pour la nouvelle taille
     joueur_concerne->main_joueur = (char*)realloc(joueur_concerne->main_joueur, nouvelle_taille * sizeof(char));
 
     // Vérification de la réallocation
-    if (joueur_concerne->main_joueur == NULL) {
-        printf("Erreur de réallocation de mémoire\n");
-        return;
-    }
+    
 
     // Ajouter les lettres du mot ajouté (mot_ajt) à la fin de la main
     for (int i = *taille_main; i < nouvelle_taille; ++i) {
         joueur_concerne->main_joueur[i] = mot_ajt[i - *taille_main]; // Copie du mot ajouté
     }
 
+    joueur_concerne->main_joueur[nouvelle_taille] = '\0';
+
     // Mettre à jour la taille de la main du joueur
     *taille_main = nouvelle_taille;
     joueur_concerne->main_joueur;
 
     // Trier la main (si nécessaire)
+
+    int long_mot = strlen(referentiel);
     seulementTrierMain(joueur_concerne, *taille_main);
+    ranger_main(joueur_concerne, nouvelle_taille, long_mot);
 }
 
 

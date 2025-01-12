@@ -12,7 +12,6 @@
     // D�marrer la partie
     Partie octoverso;
  
-
     initialiserPartie(&octoverso);
 
     return 0;
