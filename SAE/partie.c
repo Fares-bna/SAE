@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <assert.h>
 #include "partie.h"
 #include "pioche.h"
 
@@ -37,10 +38,13 @@ void initialiserPartie(Partie* jeu) {
     } while (strcmp(jeu->joueur1.mot_initial, jeu->joueur2.mot_initial) == 0 || !verifier_mot(&jeu->joueur2));
 
 
+
     ranger_main(&jeu->joueur1, TAILLE_MAIN, TAILLE_MAXMOTS-1);
     affiche_main(&jeu->joueur1, TAILLE_MAIN - (TAILLE_MAXMOTS - 1));
     ranger_main(&jeu->joueur2, TAILLE_MAIN, TAILLE_MAXMOTS-1);
     affiche_main(&jeu->joueur2, TAILLE_MAIN - (TAILLE_MAXMOTS - 1));
+
+
 
     initRail(&jeu->joueur1, &jeu->joueur2, &jeu->rail);
     ajouter_mot(&jeu->rail, &jeu->joueur1, &jeu->joueur2);
@@ -49,9 +53,13 @@ void initialiserPartie(Partie* jeu) {
 void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse) {
     char cote = '\0';
     char mot_entier[MAX_RAIL + QTE_PARENTHESES] = "";
+    char memoire[MAX_RAIL + QTE_PARENTHESES];
     char mot_rail[TAILLE_MAXMOTS - 1];
     char mot_main[TAILLE_MAXMOTS - 1];
-   
+
+    //pour la fin
+    char ancien_rail_recto[MAX_RAIL - 1];
+    char ancien_rail_verso[MAX_RAIL - 1];
 
     do {
 
@@ -61,6 +69,8 @@ void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse) {
             printf("%d> ", joueur_act->NoJoueur);
             scanf(" %c", &cote);
             scanf(" %s", mot_entier);
+            
+            strcpy(memoire, mot_entier);
 
         } while (cote != 'R' && cote != 'V');
 
@@ -71,21 +81,129 @@ void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse) {
 
     int taille_main_adv = strlen(joueur_adverse->main_joueur);
     int taille_main_act = strlen(joueur_act->main_joueur);
-    
-    adapter_main(mot_entier, mot_main, joueur_adverse, &taille_main_adv);
 
+    assert(cote_rail(memoire) == 'G' || cote_rail(memoire) == 'D');
 
     //affiche les joueurs en fonction de leur numero
-    if (joueur_act->NoJoueur == 1) {
-        affiche_main(joueur_act, taille_main_act);
-        affiche_main(joueur_adverse, taille_main_adv);
+
+
+
+
+    //affichage correct
+    if (cote_rail(memoire) == 'D') {
+
+        if (cote == 'R') {
+
+
+
+            if (joueur_act->NoJoueur == 1)
+            {
+                adapter_railGauche(rail, joueur_adverse, mot_main, cote, &taille_main_adv);
+                affiche_main(joueur_act, taille_main_act);
+                affiche_main(joueur_adverse, taille_main_adv);
+                printf("R : %s\n", rail->recto);
+                inverserRail(rail);
+
+
+            }
+
+            else
+            {
+                adapter_railGauche(rail, joueur_adverse, mot_main, cote, &taille_main_adv);
+                affiche_main(joueur_adverse, taille_main_adv);
+                affiche_main(joueur_act, taille_main_act);
+                printf("R : %s\n", rail->recto);
+                inverserRail(rail);
+            }
+
+        }
+
+        if (cote == 'V') {
+
+
+
+            if (joueur_act->NoJoueur == 1)
+            {
+                adapter_railGauche(rail, joueur_adverse, mot_main, cote, &taille_main_adv);
+                affiche_main(joueur_act, taille_main_act);
+                affiche_main(joueur_adverse, taille_main_adv);
+                printf("R : %s\n", rail->recto);
+                inverserRail(rail);
+
+
+            }
+
+            else
+            {
+                adapter_railGauche(rail, joueur_adverse, mot_main, cote, &taille_main_adv);
+                affiche_main(joueur_adverse, taille_main_adv);
+                affiche_main(joueur_act, taille_main_act);
+
+                inverserRail_VR(rail);
+                printf("V : %s\n", rail->verso);
+            }
+
+        }
+
     }
-    else {
-        affiche_main(joueur_adverse, taille_main_adv);
-        affiche_main(joueur_act, taille_main_act);
+
+    if (cote_rail(memoire) == 'G')
+    {
+        if (cote == 'R') {
+
+
+
+            if (joueur_act->NoJoueur == 1)
+            {
+                adapter_railDroit(rail, joueur_adverse, mot_main, cote, &taille_main_adv);
+                affiche_main(joueur_act, taille_main_act);
+                affiche_main(joueur_adverse, taille_main_adv);
+                printf("R : %s\n", rail->recto);
+                inverserRail(rail);
+
+
+            }
+
+            else
+            {
+                adapter_railDroit(rail, joueur_adverse, mot_main, cote, &taille_main_adv);
+                affiche_main(joueur_adverse, taille_main_adv);
+                affiche_main(joueur_act, taille_main_act);
+                printf("R : %s\n", rail->recto);
+                inverserRail(rail);
+            }
+
+        }
+
+        if (cote == 'V') {
+
+
+
+            if (joueur_act->NoJoueur == 1)
+            {
+                adapter_railDroit(rail, joueur_adverse, mot_main, cote, &taille_main_adv);
+                affiche_main(joueur_act, taille_main_act);
+                affiche_main(joueur_adverse, taille_main_adv);
+                printf("R : %s\n", rail->recto);
+                inverserRail(rail);
+
+
+            }
+
+            else
+            {
+                adapter_railDroit(rail, joueur_adverse, mot_main, cote, &taille_main_adv);
+                affiche_main(joueur_adverse, taille_main_adv);
+                affiche_main(joueur_act, taille_main_act);
+
+                inverserRail_VR(rail);
+                printf("V : %s\n", rail->verso);
+            }
+
+        }
+
     }
 
 }
-
 
 

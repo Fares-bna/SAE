@@ -6,6 +6,10 @@
 #include "dictionnaire.h"
 
 bool verifDico(const char* mot) {
+
+    return true;
+
+
     FILE* dico = fopen("ods4.txt", "r");
     if (dico == NULL) {
         printf("Le dictionnaire est introuvable\n");
@@ -14,6 +18,7 @@ bool verifDico(const char* mot) {
     char ligne[MAX_LIGNE];
     // Lire le fichier ligne par ligne
     while (fgets(ligne, sizeof(ligne), dico)) {
+        
         ligne[strcspn(ligne, "\n")] = '\0'; // Supprime le saut de ligne pour pouvoir comparer la ligne avec le mot
         // Comparer directement la ligne avec le mot
         if (strcmp(ligne, mot) == 0) {

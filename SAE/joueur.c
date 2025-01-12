@@ -12,8 +12,8 @@ void tirer_main(char* pioche, Joueur* joueur_act, int* taille_pioche) {
         joueur_act->main_joueur[i] = pioche[*taille_pioche - i - 1];
 
     }
+    joueur_act->main_joueur[TAILLE_MAIN] = '\0';
     *taille_pioche -= TAILLE_MAIN; 
-
 }
 void modifier_Main(const char* mot, char* main) {
 
@@ -37,7 +37,6 @@ bool verifier_mot(Joueur* joueur_act) {
     if (strlen(joueur_act->mot_initial) != 4) {
         return false;
     }
-
     char temp[TAILLE_MAIN];
 
     strncpy(temp, joueur_act->main_joueur, TAILLE_MAIN);
@@ -111,7 +110,11 @@ void trier_et_afficher_main(Joueur* joueur_act, const int taille_main) {
 
 void creation_joueur(char* pioche, Joueur* joueur_act, int* nbJoueur, int* taille_pioche, const int taille_main) {
 
+
+
     joueur_act->NoJoueur = *nbJoueur;
+    joueur_act->main_joueur = (char*)calloc(TAILLE_MAIN, sizeof(char));
+
     tirer_main(pioche, joueur_act, taille_pioche);
     trier_et_afficher_main(joueur_act, taille_main);
     ++(*nbJoueur);
@@ -146,7 +149,7 @@ void ranger_main(Joueur* joueur_act, int taille_main, int taille_mot) {
 
 
     // Remplir le reste avec '0' jusqu'à la fin, seulement si index est inférieur à taille_main
-    for (int i = index; i < taille_main && i < sizeof(joueur_act->main_joueur) / sizeof(joueur_act->main_joueur[0]); ++i) {
+    for (int i = taille_main-taille_mot; i < taille_main ; ++i) {
         joueur_act->main_joueur[i] = '\0'; // Remplir le reste avec '0'
     }
 
@@ -156,17 +159,30 @@ void ranger_main(Joueur* joueur_act, int taille_main, int taille_mot) {
 
 
 
-void adapter_main(const char* mot_ajt, char* mot_suprime, Joueur* joueur_concerne, int taille_main) {
+void adapter_main(char* mot_ajt, const char* referentiel, Joueur* joueur_concerne, int* taille_main) {
+    // On calcule la nouvelle taille totale de la main
+    int nouvelle_taille = *taille_main + strlen(referentiel);
 
-    for (int i = taille_main-1; i < (taille_main-1)+strlen(mot_ajt);++i){
-        int indice=0;
-        joueur_concerne->main_joueur[i] = mot_ajt[indice];
-        ++indice;
-}
-    taille_main += strlen(mot_ajt);
-   seulementTrierMain(&joueur_concerne, taille_main);
+    // Réallocation de la mémoire pour la nouvelle taille
+    joueur_concerne->main_joueur = (char*)realloc(joueur_concerne->main_joueur, nouvelle_taille * sizeof(char));
 
-   
+    // Vérification de la réallocation
+    if (joueur_concerne->main_joueur == NULL) {
+        printf("Erreur de réallocation de mémoire\n");
+        return;
+    }
+
+    // Ajouter les lettres du mot ajouté (mot_ajt) à la fin de la main
+    for (int i = *taille_main; i < nouvelle_taille; ++i) {
+        joueur_concerne->main_joueur[i] = mot_ajt[i - *taille_main]; // Copie du mot ajouté
+    }
+
+    // Mettre à jour la taille de la main du joueur
+    *taille_main = nouvelle_taille;
+    joueur_concerne->main_joueur;
+
+    // Trier la main (si nécessaire)
+    seulementTrierMain(joueur_concerne, *taille_main);
 }
 
 

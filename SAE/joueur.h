@@ -10,7 +10,7 @@
 
 typedef struct {
     int NoJoueur;
-    char main_joueur[TAILLE_MAIN];
+    char* main_joueur;
     char mot_initial[TAILLE_MAXMOTS];
 } Joueur;
 
@@ -23,7 +23,7 @@ void ranger_main(Joueur* joueur_act, int taille_main, int taille_mot);
 void tirer_main(char* pioche, Joueur* joueur_act, int* taille_pioche);
 void affiche_main(Joueur* joueur_act, int taille_main);
 void trier_et_afficher_main(Joueur* joueur_act, const int taille_main);
-void adapter_main(const char* mot_ajt, char* mot_suprime, Joueur* joueur_concerne, int taille_main);
+void adapter_main(char* mot_ajt, const char* referentiel, Joueur* joueur_concerne, int* taille_main);
 void seulementTrierMain(Joueur* joueur_act, const int taille_main);
 
 

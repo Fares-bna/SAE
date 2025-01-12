@@ -22,6 +22,21 @@ void inverserRail(Rails* rail_jeu) {
     // Affichage du r�sultat
     printf("V : %s\n", rail_jeu->verso);
 }
+void inverserRail_VR(Rails* rail_jeu) {
+
+
+
+    // Boucle pour inverser les caract�res du recto dans le verso
+    for (int i = 0; i < MAX_RAIL; ++i) {
+        rail_jeu->recto[i] = rail_jeu->verso[(MAX_RAIL - 1) - i];
+    }
+
+    // Ajout du caract�re nul � la fin de la cha�ne verso
+    rail_jeu->recto[(MAX_RAIL)] = '\0';
+
+    // Affichage du r�sultat
+    printf("R : %s\n", rail_jeu->recto);
+}
 
 void initRail(Joueur* joueur1, Joueur* joueur2, Rails* rail_jeu) {
     // Si le premier mot est plus proche de A (ordre alphab�tique) que le second
@@ -122,7 +137,7 @@ bool verifier_main(char* mot, const char* mot_main, Joueur* joueur_act) {
 
     if (temoin == (strlen(mot_main))) {
 
-        modifier_Main(mot_main, &joueur_act->main_joueur);
+        modifier_Main(mot_main, joueur_act->main_joueur);
         ranger_main(joueur_act, strlen(joueur_act->main_joueur), strlen(mot_main));
 
         return true;
@@ -249,59 +264,106 @@ bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot,
 }
 
 
-void adapter_railGauche(Rails* rail_act, char* mot_main) {
+void adapter_railDroit(Rails* rail_act, Joueur* joueur_adv, char* mot_main, const char cote, int* taille_main) {
     int decaler = strlen(mot_main);
     char reserve[TAILLE_MAXMOTS - 1];
 
-    if (cote_rail == 'R') {
-
-        for (int i = strlen(rail_act->recto) - decaler; i < strlen(rail_act->recto); ++i) {
-            int temoin = 0;
-            reserve[temoin] = rail_act->recto[i];
-            rail_act->recto[i] = '0';
-
-        }
-
-        int index = 0; // Commence à gauche pour déplacer les '0'
-        for (int i = 0; i < strlen(rail_act->recto); i++) {
-            if (rail_act->recto[i] == '0') { // Si c'est un '0'
-                rail_act->recto[index] = '0'; // Place le '0' à la position 'index'
-                index++; // Incrémente l'indice
-            }
-        }
-
-        // Maintenant on remplit le reste de la chaîne avec les lettres restantes à droite
-        for (int i = 0; i < strlen(rail_act->recto); i++) {
-            if (rail_act->recto[i] != '0') {
-                rail_act->recto[index] = rail_act->recto[i]; // Déplace la lettre à la position 'index'
-                index++; // Incrémente l'indice pour la prochaine position valide
-            }
-        }
-
-        for (int i = 0; rail_act->recto[i] == '0'; ++i) {
-            rail_act->recto[i] = reserve[i];
-        }
-
-
+    if (cote == 'R') {
 
        
-        
+        int index = 0;
+        //Les deux dernières lettres sont stockées dans la reserve qui les ajoutera a la main du joueur adverse
+        for (int i = strlen(rail_act->recto) - strlen(mot_main); i < strlen(rail_act->recto); ++i) {
+            reserve[index] = rail_act->recto[i];
+            ++index;
+        }
 
+        // Ajouter les caractères du mot_main au début
+        for (int i = 0; i < strlen(mot_main); ++i) {
+            rail_act->recto[i] = mot_main[i];
+        }
 
-    
-
-        
-
-      
+        // Terminer la chaîne avec '\0'
+        rail_act->recto[strlen(rail_act->recto)] = '\0';
+        adapter_main(&reserve, mot_main, joueur_adv, taille_main);
 
     }
 
 
 
+     if (cote == 'V') {
+         
+            //Les deux dernières lettres sont stockées dans la reserve qui les ajoutera a la main du joueur adverse
+         int index = 0;
+         //Les deux dernières lettres sont stockées dans la reserve qui les ajoutera a la main du joueur adverse
+         for (int i = strlen(rail_act->verso) - strlen(mot_main); i < strlen(rail_act->verso); ++i) {
+             reserve[index] = rail_act->verso[i];
+             ++index;
+         }
+
+         // Ajouter les caractères du mot_main au début
+         for (int i = 0; i < strlen(mot_main); ++i) {
+             rail_act->verso[i] = mot_main[i];
+         }
+
+         // Terminer la chaîne avec '\0'
+         rail_act->verso[strlen(rail_act->verso)] = '\0';
+         adapter_main(&reserve, mot_main, joueur_adv, taille_main);
+     }
+
+
+
+    
 }
 
 
+void adapter_railGauche(Rails * rail_act, Joueur * joueur_adv, char* mot_main, const char cote, int* taille_main) {
+    
+        char reserve[TAILLE_MAXMOTS - 1];
+
+        if (cote == 'R') {
+
+            int index = 0;
+            for (int i = 0; i < strlen(mot_main); ++i) {
+                reserve[index] = rail_act->recto[i];
+                ++index;
+            }
+
+            for (int i = 0; i < strlen(rail_act->recto) - strlen(mot_main); ++i) {
+                rail_act->recto[i] = rail_act->recto[i + strlen(mot_main)];
+            }
+
+            for (int i = 0; i < strlen(mot_main); ++i) {
+                rail_act->recto[strlen(rail_act->recto) - strlen(mot_main) + i] = mot_main[i];
+            }
+            adapter_main(&reserve, mot_main, joueur_adv, taille_main);
+        }
 
 
+            
+      
 
-  
+        if (cote == 'V') {
+
+            int index = 0;
+            //Les deux premières lettres sont stockées dans la reserve qui les ajoutera a la main du joueur adverse
+            for (int i = 0; i < strlen(mot_main); ++i) {
+                reserve[index] = rail_act->verso[i];
+                ++index;
+            }
+
+
+            for (int i = 0; i < strlen(rail_act->verso) - strlen(mot_main); ++i) {
+                rail_act->verso[i] = rail_act->verso[i + strlen(mot_main)];
+            }
+
+            for (int i = 0; i < strlen(mot_main); ++i) {
+                rail_act->verso[strlen(rail_act->verso) - strlen(mot_main) + i] = mot_main[i];
+            }
+            adapter_main(&reserve, mot_main, joueur_adv, taille_main);
+            
+        }
+
+       
+}
+
