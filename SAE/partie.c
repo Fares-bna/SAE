@@ -24,14 +24,13 @@ void initialiserPartie(Partie* jeu) {
 
     initialiser_Pioche(jeu->pioche);
 
-    creation_joueur(jeu->pioche, &jeu->joueur1, &nbrJoueur, &taille_pioche);
-    creation_joueur(jeu->pioche, &jeu->joueur2, &nbrJoueur, &taille_pioche);
+    creation_joueur(jeu->pioche, &jeu->joueur1, &nbrJoueur, &taille_pioche,TAILLE_MAIN);
+    creation_joueur(jeu->pioche, &jeu->joueur2, &nbrJoueur, &taille_pioche, TAILLE_MAIN);
 
     do {
         demanderMot(&jeu->joueur1);
     } while (!verifier_mot(&jeu->joueur1));
-
-   
+ 
 
     do {
         demanderMot(&jeu->joueur2);
@@ -40,18 +39,20 @@ void initialiserPartie(Partie* jeu) {
 
     ranger_main(&jeu->joueur1, TAILLE_MAIN, TAILLE_MAXMOTS-1);
     affiche_main(&jeu->joueur1, TAILLE_MAIN - (TAILLE_MAXMOTS - 1));
-    ranger_main(&jeu->joueur2, TAILLE_MAIN, TAILLE_MAXMOTS -1);
+    ranger_main(&jeu->joueur2, TAILLE_MAIN, TAILLE_MAXMOTS-1);
     affiche_main(&jeu->joueur2, TAILLE_MAIN - (TAILLE_MAXMOTS - 1));
 
     initRail(&jeu->joueur1, &jeu->joueur2, &jeu->rail);
-    ajouter_mot(&jeu->rail, &jeu->joueur1);
-    ajouter_mot(&jeu->rail, &jeu->joueur2);
+    ajouter_mot(&jeu->rail, &jeu->joueur1, &jeu->joueur2);
+    ajouter_mot(&jeu->rail, &jeu->joueur2,&jeu->joueur1);
 }
-void ajouter_mot(Rails* rail, Joueur* joueur_act) {
+void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse) {
     char cote = '\0';
     char mot_entier[MAX_RAIL + QTE_PARENTHESES] = "";
     char mot_rail[TAILLE_MAXMOTS - 1];
     char mot_main[TAILLE_MAXMOTS - 1];
+   
+
     do {
 
 
@@ -68,6 +69,21 @@ void ajouter_mot(Rails* rail, Joueur* joueur_act) {
 
     } while (!verifier_introduction(rail, joueur_act, mot_entier, &mot_rail, &mot_main, cote));
 
+    int taille_main_adv = strlen(joueur_adverse->main_joueur);
+    int taille_main_act = strlen(joueur_act->main_joueur);
+    
+    adapter_main(mot_entier, mot_main, joueur_adverse, &taille_main_adv);
+
+
+    //affiche les joueurs en fonction de leur numero
+    if (joueur_act->NoJoueur == 1) {
+        affiche_main(joueur_act, taille_main_act);
+        affiche_main(joueur_adverse, taille_main_adv);
+    }
+    else {
+        affiche_main(joueur_adverse, taille_main_adv);
+        affiche_main(joueur_act, taille_main_act);
+    }
 
 }
 

@@ -46,23 +46,23 @@ bool verifier_mot(Joueur* joueur_act) {
         for (int j = 0; j < TAILLE_MAIN; ++j) { //Pour chaque lettre, on regarde l'entièreté de la main du joueur..
 
             if (joueur_act->mot_initial[i] == joueur_act->main_joueur[j]) { //Si la lettre du mot correspond à une lettre du chevalet, on incrémente la valeur témoin et on continue la boucle
-
+                
                 if (temp[j] != '0') {
-
                     temp[j] = '0';
                     ++temoin;
                     break;
                 }
 
-
+                
             }
         }
 
     }
 
     if (temoin == (TAILLE_MAXMOTS - 1)) {
-        strcpy(joueur_act->main_joueur, temp);
-        modifier_Main(joueur_act->mot_initial, &joueur_act->main_joueur);
+       
+        strncpy(joueur_act->main_joueur, temp, TAILLE_MAIN);
+        
         return true;
     }
 
@@ -78,10 +78,24 @@ void affiche_main(Joueur* joueur_act, int taille_main) {
 }
 
 
-void trier_et_afficher_main(Joueur* joueur_act) {
+//a simplifier / modifier l'appel de la fonction trier et afficher et garder seulement celle la
+void seulementTrierMain(Joueur* joueur_act, const int taille_main) {
 
-    for (int i = 0; i < TAILLE_MAIN - 1; i++) {
-        for (int j = i + 1; j < TAILLE_MAIN; j++) {
+    for (int i = 0; i < taille_main - 1; i++) {
+        for (int j = i + 1; j < taille_main; j++) {
+            if (joueur_act->main_joueur[i] > joueur_act->main_joueur[j]) {
+                char temp = joueur_act->main_joueur[i];
+                joueur_act->main_joueur[i] = joueur_act->main_joueur[j];
+                joueur_act->main_joueur[j] = temp;
+            }
+        }
+    }
+  
+}
+void trier_et_afficher_main(Joueur* joueur_act, const int taille_main) {
+
+    for (int i = 0; i < taille_main - 1; i++) {
+        for (int j = i + 1; j < taille_main; j++) {
             if (joueur_act->main_joueur[i] > joueur_act->main_joueur[j]) {
                 char temp = joueur_act->main_joueur[i];
                 joueur_act->main_joueur[i] = joueur_act->main_joueur[j];
@@ -90,16 +104,16 @@ void trier_et_afficher_main(Joueur* joueur_act) {
         }
     }
 
-    affiche_main(joueur_act, TAILLE_MAIN);
+    affiche_main(joueur_act, taille_main);
 }
 
 
 
-void creation_joueur(char* pioche, Joueur* joueur_act, int* nbJoueur, int* taille_pioche) {
+void creation_joueur(char* pioche, Joueur* joueur_act, int* nbJoueur, int* taille_pioche, const int taille_main) {
 
     joueur_act->NoJoueur = *nbJoueur;
     tirer_main(pioche, joueur_act, taille_pioche);
-    trier_et_afficher_main(joueur_act);
+    trier_et_afficher_main(joueur_act, taille_main);
     ++(*nbJoueur);
 
 
@@ -131,10 +145,9 @@ void ranger_main(Joueur* joueur_act, int taille_main, int taille_mot) {
     }
 
 
-    // Remplir le reste avec '0'
     // Remplir le reste avec '0' jusqu'à la fin, seulement si index est inférieur à taille_main
     for (int i = index; i < taille_main && i < sizeof(joueur_act->main_joueur) / sizeof(joueur_act->main_joueur[0]); ++i) {
-        joueur_act->main_joueur[i] = '0'; // Remplir le reste avec '0'
+        joueur_act->main_joueur[i] = '\0'; // Remplir le reste avec '0'
     }
 
 
@@ -143,16 +156,18 @@ void ranger_main(Joueur* joueur_act, int taille_main, int taille_mot) {
 
 
 
-// Fonction pour tirer une main de chevalets
+void adapter_main(const char* mot_ajt, char* mot_suprime, Joueur* joueur_concerne, int taille_main) {
 
+    for (int i = taille_main-1; i < (taille_main-1)+strlen(mot_ajt);++i){
+        int indice=0;
+        joueur_concerne->main_joueur[i] = mot_ajt[indice];
+        ++indice;
+}
+    taille_main += strlen(mot_ajt);
+   seulementTrierMain(&joueur_concerne, taille_main);
 
-
-
-// Fonction pour trier la main d'un joueur
-
-
-
-
+   
+}
 
 
 

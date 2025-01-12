@@ -120,9 +120,6 @@ bool verifier_main(char* mot, const char* mot_main, Joueur* joueur_act) {
 
     }
 
-
-
-
     if (temoin == (strlen(mot_main))) {
 
         modifier_Main(mot_main, &joueur_act->main_joueur);
@@ -133,6 +130,8 @@ bool verifier_main(char* mot, const char* mot_main, Joueur* joueur_act) {
 
     return false;
 }
+
+
 
 
 //Pour le recto
@@ -250,7 +249,56 @@ bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot,
 }
 
 
+void adapter_railGauche(Rails* rail_act, char* mot_main) {
+    int decaler = strlen(mot_main);
+    char reserve[TAILLE_MAXMOTS - 1];
 
+    if (cote_rail == 'R') {
+
+        for (int i = strlen(rail_act->recto) - decaler; i < strlen(rail_act->recto); ++i) {
+            int temoin = 0;
+            reserve[temoin] = rail_act->recto[i];
+            rail_act->recto[i] = '0';
+
+        }
+
+        int index = 0; // Commence à gauche pour déplacer les '0'
+        for (int i = 0; i < strlen(rail_act->recto); i++) {
+            if (rail_act->recto[i] == '0') { // Si c'est un '0'
+                rail_act->recto[index] = '0'; // Place le '0' à la position 'index'
+                index++; // Incrémente l'indice
+            }
+        }
+
+        // Maintenant on remplit le reste de la chaîne avec les lettres restantes à droite
+        for (int i = 0; i < strlen(rail_act->recto); i++) {
+            if (rail_act->recto[i] != '0') {
+                rail_act->recto[index] = rail_act->recto[i]; // Déplace la lettre à la position 'index'
+                index++; // Incrémente l'indice pour la prochaine position valide
+            }
+        }
+
+        for (int i = 0; rail_act->recto[i] == '0'; ++i) {
+            rail_act->recto[i] = reserve[i];
+        }
+
+
+
+       
+        
+
+
+    
+
+        
+
+      
+
+    }
+
+
+
+}
 
 
 
