@@ -22,19 +22,24 @@ void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse, char* 
     //pour la fin
     char ancien_rail_recto[MAX_RAIL - 1];
     char ancien_rail_verso[MAX_RAIL - 1];
+
+int taille_main_act = strlen(joueur_act->main_joueur);
+int taille_main_adv = strlen(joueur_adverse->main_joueur);
+
     do {
 
 
-
+    
         do {
             printf("%d> ", joueur_act->NoJoueur);
             scanf(" %c", &cote);
 
             if (cote == '-') {
 
-                echanger_lettre()
-
-           }
+                if (echanger_lettre(joueur_act, taille_main_act, pioche, taille_pioche)) {
+                    affichage_correct(rail, joueur_act, joueur_adverse, &mot_main, mot_rail, cote, &taille_main_adv, taille_main_act, memoire, pioche, taille_pioche);
+                }
+            }
 
             scanf(" %s", mot_entier);
 
@@ -48,8 +53,9 @@ void ajouter_mot(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse, char* 
 
     } while (!verifier_introduction(rail, joueur_act, mot_entier, &mot_rail, &mot_main, cote));
 
-    int taille_main_adv = strlen(joueur_adverse->main_joueur);
-    int taille_main_act = strlen(joueur_act->main_joueur);
+    taille_main_act = strlen(joueur_act->main_joueur);
+    taille_main_adv = strlen(joueur_adverse->main_joueur);
+    
 
     assert(cote_rail(memoire) == 'G' || cote_rail(memoire) == 'D');
 

@@ -195,17 +195,28 @@ void adapter_main(char* mot_ajt, const char* referentiel, Joueur* joueur_concern
 }
 
 
-void echanger_lettre(Joueur* joueur_act, int taille_main, char* pioche, int* taille_pioche, char signe) {
-    char delete, temp;
+bool echanger_lettre(Joueur* joueur_act, int taille_main, char* pioche, int* taille_pioche, char signe) {
+    char delete = "";
+    char temp = "";
     int position = rand() % *taille_pioche;
-    scanf(" %c", &delete);
 
-    temp = delete;
-    delete = pioche[position];
-    pioche[position] = temp;
-    ranger_main(joueur_act->main_joueur, taille_main, 0);
+        scanf(" %c", &delete);
 
+        for (int i = 0; i < taille_main; ++i) {
 
+            if (joueur_act->main_joueur[i] == delete) {
+
+                joueur_act->main_joueur[i] == '0';
+
+                temp = delete;
+                delete = pioche[position];
+                pioche[position] = temp;
+                ranger_main(joueur_act, taille_main, 0);
+                return true;
+            }
+
+        }
+        return false;
 }
 
 void supprimer_lettre(Joueur* joueur_act, int taille_main, char* pioche, int* taille_pioche) {
