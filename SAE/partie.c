@@ -4,7 +4,7 @@
 #include <time.h>
 #include <assert.h>
 #include "partie.h"
-#include "pioche.h"
+
 
 
 void affichage_correct(Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse, char* mot_main, char* mot_rail, char cote, int* taille_main_adv, int taille_main_act, char* memoire, char* pioche, int* taille_pioche) {
@@ -36,7 +36,7 @@ int taille_main_adv = strlen(joueur_adverse->main_joueur);
 
             if (cote == '-') {
 
-                if (echanger_lettre(joueur_act, taille_main_act, pioche, taille_pioche)) {
+                if (echanger_lettre(joueur_act, taille_main_act, pioche, taille_pioche, cote)) {
                     affichage_correct(rail, joueur_act, joueur_adverse, &mot_main, mot_rail, cote, &taille_main_adv, taille_main_act, memoire, pioche, taille_pioche);
                 }
 

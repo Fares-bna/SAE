@@ -7,7 +7,6 @@
 
 bool verifDico(const char* mot) {
 
-    return true;
 
 
     FILE* dico = fopen("ods4.txt", "r");

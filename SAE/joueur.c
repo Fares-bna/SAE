@@ -4,7 +4,7 @@
 #include <stdbool.h>   // Pour le type bool
 #include <string.h>    // Pour les manipulations de cha�nes
 #include "joueur.h"    // N�cessaire pour la structure Joueur et les fonctions associ�es
-#include "dictionnaire.h"
+
 
 void tirer_main(char* pioche, Joueur* joueur_act, int* taille_pioche) {
 
