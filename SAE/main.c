@@ -10,10 +10,10 @@
     int main() {
 
     // D�marrer la partie
-    Partie octoverso;
- 
+    Partie octoverso; 
     initialiserPartie(&octoverso);
-
     return 0;
+
+
     }
 

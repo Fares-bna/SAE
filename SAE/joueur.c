@@ -193,5 +193,22 @@ void adapter_main(char* mot_ajt, const char* referentiel, Joueur* joueur_concern
 }
 
 
+void supprimer_lettre(Joueur* joueur_act, int taille_main) {
+    printf("-%d> ", joueur_act->NoJoueur);
+    char delete;
+    scanf(" %c", &delete);
+
+
+    for (int i = 0; i < taille_main; ++i) {
+        if (joueur_act->main_joueur[i] == delete) {
+            joueur_act->main_joueur[i] = '0';
+            ranger_main(joueur_act, taille_main, 1);
+            trier_et_afficher_main(joueur_act, taille_main);
+            return;
+        }
+    }
+
+
+}
 
 

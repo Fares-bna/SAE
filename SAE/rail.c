@@ -1,7 +1,8 @@
 ﻿#pragma warning(disable:4996)
 #include <stdio.h>
 #include <string.h>
-#include "rail.h" // Nécessaire pour la structure Rails et les fonctions associées
+#include "rail.h"
+// Nécessaire pour la structure Rails et les fonctions associées
 
 
 //a enlever 
@@ -111,6 +112,7 @@ char cote_rail(const char* mot) {
     return 'G';
 }
 
+
 bool verifier_main(char* mot, const char* mot_main, Joueur* joueur_act) {
     int temoin = 0;
 
@@ -149,12 +151,35 @@ bool verifier_main(char* mot, const char* mot_main, Joueur* joueur_act) {
 
 
 
+
+
+
+
+
+
+
+
+
+
+bool verifier_octo(char* mot, char* mot_rail, char* mot_main) {
+    simplifier(mot);
+    if (strlen(mot)==8){
+        return verifDico(mot);
+    }
+
+    return false;
+}
+
 //Pour le recto
 bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot, char* mot_rail, char* mot_main, const char cote) {
 
     if (strlen(mot) < 2 && strlen(mot) > 4) {
         return false;
     }
+
+
+
+    
 
 
 
@@ -262,7 +287,6 @@ bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot,
 
 
 }
-
 
 void adapter_railDroit(Rails* rail_act, Joueur* joueur_adv, char* mot_main, const char cote, int* taille_main) {
     int decaler = strlen(mot_main);
@@ -377,3 +401,42 @@ void adapter_railGauche(Rails * rail_act, Joueur * joueur_adv, char* mot_main, c
        
 }
 
+void afficher_main_et_rail(Joueur* joueur1, int taille1, Joueur* joueur2, int taille2, char cote, Rails* rail) {
+    affiche_main(joueur1, taille1);
+    affiche_main(joueur2, taille2);
+
+    if (cote == 'R') {
+        printf("R : %s\n", rail->recto);
+        inverserRail(rail);
+    }
+
+
+    else {
+        inverserRail_VR(rail);
+        printf("V : %s\n", rail->verso);
+    }
+}
+
+void gerer_rail(char direction, Rails* rail, Joueur* joueur_act, Joueur* joueur_adverse, char* mot_main, char* mot_rail, char cote, int* taille_main_adv, int taille_main_act, char* memoire) {
+    if (direction == 'D') {
+        adapter_railGauche(rail, joueur_adverse, mot_main, cote, taille_main_adv);
+    }
+    else {
+        adapter_railDroit(rail, joueur_adverse, mot_main, cote, taille_main_adv);
+    }
+
+    if (joueur_act->NoJoueur == 1) {
+        
+        
+
+        
+        
+
+        afficher_main_et_rail(joueur_act, taille_main_act, joueur_adverse, *taille_main_adv, cote, rail);
+    }
+    else {
+
+        
+        afficher_main_et_rail(joueur_adverse, *taille_main_adv, joueur_act, taille_main_act, cote, rail);
+    }
+}

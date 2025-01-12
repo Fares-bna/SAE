@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "joueur.h"
+#include "dictionnaire.h"
 
 #define MAX_RAIL 8
 #define QTE_PARENTHESES 2
@@ -23,3 +24,4 @@ bool verifier_main(char* mot, const char* mot_main, Joueur* joueur_act);
 bool verifier_introduction(Rails* rail_act, Joueur* joueur_act, const char* mot, char* mot_rail, char* mot_main, const char cote);
 void adapter_railGauche(Rails* rail_act, Joueur* joueur_adv, char* mot_main, const char cote, int* taille_main);
 void adapter_railDroit(Rails* rail_act, Joueur* joueur_adv, char* mot_main, const char cote, int* taille_main);
+bool verifier_octo(char* mot, char* mot_rail, char* mot_main);
